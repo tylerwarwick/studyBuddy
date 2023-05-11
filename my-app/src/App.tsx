@@ -10,10 +10,10 @@ function App() {
   
   return (
     <div>
-      <Navbar />
       <BrowserRouter>
+        <Navbar />
         <Routes>
-          <Route path='/' Component={Login}/>
+          <Route path='/login' Component={Login}/>
           <Route path='/register' Component={Register}/>
         </Routes>
       </BrowserRouter>
