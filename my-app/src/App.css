@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+#navbar a.active {
+    color: theme('colors.blue.700')
+  }
+  
