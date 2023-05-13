@@ -2,7 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-#navbar a.active {
-    color: theme('colors.blue.700')
+
+@media screen and (max-width : 768px) {
+  #navbar a.active {
+    background-color : theme('colors.blue.500');
+    display: 
   }
   
+}
+
+@media screen and (min-width : 768px) {
+  #navbar a.active {
+    color: theme('colors.blue.500')
+  }
+  
+}
