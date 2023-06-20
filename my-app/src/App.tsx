@@ -5,6 +5,7 @@ import Navbar from './components/navbar'
 import Lobby from './pages/lobby';
 import Login from './pages/login';
 import Register from './pages/register';
+import Practice from './pages/practice';
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
           <Route path='/' Component={Lobby}/>
           <Route path='/login' Component={Login}/>
           <Route path='/register' Component={Register}/>
+          <Route path='/practice' Component={Practice}/>
         </Routes>
       </BrowserRouter>
     </div>
