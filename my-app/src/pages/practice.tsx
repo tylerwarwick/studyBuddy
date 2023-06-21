@@ -1,16 +1,21 @@
 import '../App.css';
 import {useState} from 'react';
-import StudyCard from '../components/studyCard';
+import RenderedCard from '../components/renderedCard';
 import Button from '../components/button';
+import { Card } from '../components/renderedCard';
 
 
+interface CardProps {
+    cards : Card[];
+}
 
-export default function Practice() {
 
+const Practice = () => {
+    let i = 0;
     return (
         <div className='bg-gray-900 h-screen flex flex-col space-y-3 items-center justify-center'>
             <div className='select-none'>
-                <StudyCard Question='What is the powerhouse of the cell?' Answer='Mitochondria' IsKnown={false} />
+                <RenderedCard question={''} answer={''} isKnown={false} />
             </div>
             <div className='space-x-3'>
                 <Button displayTag="I don't know it"></Button>
@@ -19,3 +24,5 @@ export default function Practice() {
         </div>
     );
 }
+
+export default Practice;
