@@ -2,21 +2,21 @@
   "notes" :
   [
     {
-      "Question" : "What is the powerhouse of the cell?",
-      "Answer" : "Mitochondria",
-      "IsKnown" : false
+      "question" : "What is the powerhouse of the cell?",
+      "answer" : "Mitochondria",
+      "isKnown" : false
     },
 
     {
-      "Question" : "What makes plant cells unique?",
-      "Answer" : "Plant cells have a vacuole to maintain turgor pressure",
-      "IsKnown" : false
+      "question" : "What makes plant cells unique?",
+      "answer" : "Plant cells have a vacuole to maintain turgor pressure",
+      "isKnown" : false
     },
 
     {
-      "Question" : "Do my balls itch?",
-      "Answer" : "Yes",
-      "IsKnown" : false
+      "question" : "Do my balls itch?",
+      "answer" : "Yes",
+      "isKnown" : false
     }
   ]
 }

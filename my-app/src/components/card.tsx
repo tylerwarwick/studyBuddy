@@ -1,13 +1,16 @@
 import { useState } from 'react';
 import '../App.css';
+import { text } from 'stream/consumers';
 
-export interface Card {
+export interface CardProps {
     question : string;
     answer : string;
     isKnown : boolean;
 }
 
-export default function RenderedCard(card : Card) {
+
+
+export default function Card(card : CardProps) {
     const [frontFacing, flipCard] = useState(true);
     const flip = () => flipCard(frontFacing => !frontFacing);
     
