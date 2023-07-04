@@ -31,7 +31,7 @@ const Practice = () => {
      
     //Store length of question deck to infinitely cycle through deck until empty
     const [index, updateIndex] = useState(0);
-    let deckLength = activeCards.length;
+    
      
     //Define state for which way card is facing
     //Pass function to update state to child card component
