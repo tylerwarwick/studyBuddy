@@ -1,5 +1,5 @@
+import { MouseEvent } from "react";
 import "../App.css"
-
 
 interface Card {
     id : number;
@@ -8,13 +8,22 @@ interface Card {
     isKnown : boolean;
 }
 
-interface Cards {
-    cards : Card[];
+interface RowProps {
+    card : Card
+    clickHandler : (event : React.MouseEvent<HTMLTableCellElement>, card : Card) => void;
 }
 
-const RowStyled = (card: Card) => {
+interface TableProps {
+    cards : Card[];
+    func : (event : React.MouseEvent<HTMLTableCellElement>, card : Card) => void;
+
+}
+
+const RowStyled = ({card, clickHandler} : RowProps) => {
+
+    //hover:bg-gray-600
     return (
-        <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+        <tr className="border-b bg-gray-800 border-gray-700">
         <td className="w-4 p-4">
             <div className="flex items-center">
                 <input id="checkbox-table-1" type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"></input>
@@ -27,24 +36,26 @@ const RowStyled = (card: Card) => {
         <td className="px-6 py-4">
             {card.answer}
         </td>
-        <td className={(card.isKnown ? "bg-green-500" : "bg-red-500") + " px-6 py-4"}>
+        
+        <td onClick={(event) => clickHandler(event, card)} className={(card.isKnown ? "bg-green-500 hover:bg-green-600" : "bg-red-500 hover:bg-red-600") + " px-6 py-4"}>
             
         </td>
+
         <td className="px-6 py-4">
-            <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+            <a className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
         </td>
     </tr>
 
 )};
 
 
-const Table = ({ cards } : Cards) => {
+const Table = ({ cards, func } : TableProps) => {
    
 
     return (
         <div className="relative overflow-y-scroll overflow-x-autoshadow-md sm:rounded-lg">
         <table className="w-full text-sm text-left text-gray-400">
-            <thead className="text-xs text-gray-700 uppercase bg-gray-700 text-gray-400 ">
+            <thead className="text-xs text-gray-400 uppercase bg-gray-700 text-gray-400 ">
                 <tr>
                     <th scope="col" className="p-4">
                         <div className="flex items-center">
@@ -67,13 +78,11 @@ const Table = ({ cards } : Cards) => {
                 </tr>
             </thead>
             <tbody className="h-5/6">
-                {cards.map(({id, question, answer, isKnown}) => (
+                {cards.map((c) => (
                     <RowStyled 
-                    id={id} 
-                    question={question} 
-                    answer={answer} 
-                    isKnown={isKnown} 
-                    />               
+                        card={c}
+                        clickHandler={func}
+                    />             
                     ))}
 
             </tbody>
