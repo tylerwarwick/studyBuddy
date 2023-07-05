@@ -30,10 +30,10 @@ const RowStyled = ({card, clickHandler} : RowProps) => {
                 <label  className="sr-only">checkbox</label>
             </div>
         </td>
-        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+        <th scope="row" className="px-6 py-4 font-medium text-gray-900 w-2/5 dark:text-white ">
             {card.question}
         </th>
-        <td className="px-6 py-4">
+        <td className="px-6 py-4 w-2/5">
             {card.answer}
         </td>
         
