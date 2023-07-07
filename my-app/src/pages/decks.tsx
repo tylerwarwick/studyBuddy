@@ -28,13 +28,19 @@ export default function Decks(){
 
     const toggleIsKnown = (event : React.MouseEvent<HTMLTableCellElement>, card : Card) => {
         //Update backend
-        const url = 'http://localhost/3001/notes/{' + card.id + '}';
-        const change = !(card.isKnown);
-        axios.patch(url, {isKnown : change})
+        //const url = 'http://localhost/3001/notes/{' + card.id + '}';
+        //const change = !(card.isKnown);
+        //axios.patch(url, {isKnown : change})
 
         //Update frontend state
-        //const index = cards.findIndex(c => c.id === card.id)
-        //setCards()
+        
+        const updateKnown = cards.map((c) => {
+            if (c.id === card.id) return {...c, isKnown : !(c.isKnown)}
+
+            return c;
+        })
+
+        setCards(updateKnown)
     }
 
 
