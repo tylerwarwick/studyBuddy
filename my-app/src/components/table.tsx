@@ -1,38 +1,46 @@
-import { MouseEvent } from "react";
+import { useContext } from "react";
 import "../App.css"
-import { Card } from "../pages/decks";
-import { render } from "@testing-library/react";
-
+import { Card, CardsContext } from "../pages/decks";
+import { ModalContext } from "../pages/decks";
 
 interface RowProps {
     card : Card
-    toggleIsKnown : (card : Card) => void;
-    setModalHidden : (bool : boolean) => void
-
-     //Allow rows to pass card to modal via parent state
-     fetchCard : (card : Card) => void
 }
 
 interface TableProps {
     cards : Card[];
-    toggleIsKnown : (card : Card) => void;
-    setModalHidden : (bool : boolean) => void
-
-     //Pass through to rows
-     fetchCard : (card : Card) => void
-
+    
 }
 
-const RowStyled = ({card, toggleIsKnown, setModalHidden, fetchCard} : RowProps) => {
 
-    const onEdit = () => {
-        fetchCard(card)
-        setModalHidden(false)
-        
-    }
+const RowStyled = ({ card } : RowProps) => {
+    const { modalHidden, setHidden } = useContext(ModalContext)
+    const { cards, setCards } = useContext(CardsContext)
+    //const { modalCard, selectCard } = useContext(ModalCardContext)
 
+
+    const toggleIsKnown = (card : Card) => {
+        //********** UPDATE BACKEND *************
+        //const url = 'http://localhost/3001/notes/{' + card.id + '}';
+        //const change = !(card.isKnown);
+        //axios.patch(url, {isKnown : change})
+
+        //Update frontend state
+        const updateKnown = cards.map((c) => {
+                if (c.id === card.id) return {...c, isKnown : !(c.isKnown)}
+
+                return c;
+            })
+
+            setCards(updateKnown)
+        }
 
     
+    const onEdit = () => {
+       // selectCard(() => card)
+        setHidden(() => false);
+    }
+
 
     //hover:bg-gray-600
     return (
@@ -55,14 +63,14 @@ const RowStyled = ({card, toggleIsKnown, setModalHidden, fetchCard} : RowProps) 
         </td>
 
         <td className="px-6 py-4">
-            <a onClick={onEdit} className="font-medium text-blue-600 dark:text-blue-500 select-none hover:underline">Edit</a>
+            <a onClick={() => onEdit()} className="font-medium text-blue-600 dark:text-blue-500 select-none hover:underline">Edit</a>
         </td>
     </tr>
 
 )};
 
 
-const Table = ({ cards, toggleIsKnown, setModalHidden, fetchCard} : TableProps) => {
+const Table = ({ cards } : TableProps) => {
    
 
     return (
@@ -92,12 +100,7 @@ const Table = ({ cards, toggleIsKnown, setModalHidden, fetchCard} : TableProps) 
             </thead>
             <tbody className="h-5/6">
                 {cards.map((c) => (
-                    <RowStyled 
-                        card={c}
-                        toggleIsKnown={toggleIsKnown}
-                        setModalHidden={setModalHidden}
-                        fetchCard={fetchCard}
-                    />             
+                    <RowStyled card={c} />             
                     ))}
 
             </tbody>
