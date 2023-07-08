@@ -1,25 +1,38 @@
 import { MouseEvent } from "react";
 import "../App.css"
+import { Card } from "../pages/decks";
+import { render } from "@testing-library/react";
 
-interface Card {
-    id : number;
-    question : string;
-    answer : string;
-    isKnown : boolean;
-}
 
 interface RowProps {
     card : Card
-    clickHandler : (event : React.MouseEvent<HTMLTableCellElement>, card : Card) => void;
+    toggleIsKnown : (card : Card) => void;
+    setModalHidden : (bool : boolean) => void
+
+     //Allow rows to pass card to modal via parent state
+     fetchCard : (card : Card) => void
 }
 
 interface TableProps {
     cards : Card[];
-    func : (event : React.MouseEvent<HTMLTableCellElement>, card : Card) => void;
+    toggleIsKnown : (card : Card) => void;
+    setModalHidden : (bool : boolean) => void
+
+     //Pass through to rows
+     fetchCard : (card : Card) => void
 
 }
 
-const RowStyled = ({card, clickHandler} : RowProps) => {
+const RowStyled = ({card, toggleIsKnown, setModalHidden, fetchCard} : RowProps) => {
+
+    const onEdit = () => {
+        fetchCard(card)
+        setModalHidden(false)
+        
+    }
+
+
+    
 
     //hover:bg-gray-600
     return (
@@ -37,19 +50,19 @@ const RowStyled = ({card, clickHandler} : RowProps) => {
             {card.answer}
         </td>
         
-        <td onClick={(event) => clickHandler(event, card)} className={(card.isKnown ? "bg-green-500 hover:bg-green-600" : "bg-red-500 hover:bg-red-600") + " px-6 py-4"}>
+        <td onClick={() => toggleIsKnown(card)} className={(card.isKnown ? "bg-green-500 hover:bg-green-600" : "bg-red-500 hover:bg-red-600") + " px-6 py-4"}>
             
         </td>
 
         <td className="px-6 py-4">
-            <a className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+            <a onClick={onEdit} className="font-medium text-blue-600 dark:text-blue-500 select-none hover:underline">Edit</a>
         </td>
     </tr>
 
 )};
 
 
-const Table = ({ cards, func } : TableProps) => {
+const Table = ({ cards, toggleIsKnown, setModalHidden, fetchCard} : TableProps) => {
    
 
     return (
@@ -81,12 +94,16 @@ const Table = ({ cards, func } : TableProps) => {
                 {cards.map((c) => (
                     <RowStyled 
                         card={c}
-                        clickHandler={func}
+                        toggleIsKnown={toggleIsKnown}
+                        setModalHidden={setModalHidden}
+                        fetchCard={fetchCard}
                     />             
                     ))}
 
             </tbody>
         </table>
+
+    
     </div>
 
 )};

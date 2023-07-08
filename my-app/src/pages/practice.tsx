@@ -42,12 +42,12 @@ const Practice = () => {
     const loopIndex = () => {return index == activeCards.length - 1 ? 0 : index + 1};
      
     //On button click we get next card in deck and default state to show question
-    const knownClick = (e : React.MouseEvent<HTMLButtonElement>) => {
+    const knownClick = () => {
         updateIndex(loopIndex);
         setFrontFacing(true); 
     }
      
-    const unknownClick = (e : React.MouseEvent<HTMLButtonElement>) => {
+    const unknownClick = () => {
         updateIndex(loopIndex);
         setFrontFacing(true);
      
