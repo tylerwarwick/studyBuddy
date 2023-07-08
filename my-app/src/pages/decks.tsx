@@ -43,22 +43,22 @@ const CardsContext = React.createContext<CardsContextType>(CardsContextState)
 export { CardsContext }
 
 const dummyCard = {id : 1000000, question : "question", answer : "answer", isKnown : false};
-/*
+
 //Context to tell what card the modal should display/perform edits on
 
 type ModalCardContextType = {
-    modalCard : Card;
-    selectCard : React.Dispatch<React.SetStateAction<Card>>;
+    modalCardID : number;
+    setID : React.Dispatch<React.SetStateAction<number>>;
   };
 
 const ModalCardContextState = {
-   modalCard : dummyCard,
-   selectCard: () => {}
+   modalCardID : 0,
+   setID: () => {}
 }
 const ModalCardContext = React.createContext<ModalCardContextType>(ModalCardContextState)
 export { ModalCardContext }
 
-*/
+
 
 
 
@@ -66,7 +66,7 @@ export { ModalCardContext }
 export default function Decks(){
     const [cards, setCards] = useState<Card[]>([]);
     const [modalHidden, setHidden] = useState(true);
-    const [modalCard, selectCard] = useState(dummyCard);
+    const [modalCardID, setID] = useState(0);
     
 
     //Fetch data from server on refresh
@@ -83,23 +83,24 @@ export default function Decks(){
         setHidden(() => bool)
     }
 
+
     
 
     return(
         <ModalContext.Provider value={{ modalHidden, setHidden }}>
             <CardsContext.Provider value={{ cards, setCards }}>
-                
+                <ModalCardContext.Provider value={{ modalCardID, setID }}>
                     <div>
                         <div className="w-full h-screen flex justify-center bg-gray-900">
                             <div className="w-10/12 my-9 overflow-y-auto">
                                 <Table cards={cards} />
                             </div>
                             <div className={modalHidden ? "hidden" : ""}>
-                                <Modal card={modalCard} updateCard={() => {}} modalMode={modalMode} />
+                                <Modal card={cards?.find((c) => c.id === modalCardID)} updateCard={() => {}} modalMode={modalMode} />
                             </div>
                         </div>
                     </div>
-               
+                </ModalCardContext.Provider>
             </CardsContext.Provider>
         </ModalContext.Provider>
 

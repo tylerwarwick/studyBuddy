@@ -4,7 +4,7 @@ import Button from "../components/button";
 import { Card } from "../pages/decks";
 
 interface ModalProps {
-    card : Card
+    card : Card | undefined
     updateCard : () => void
 
     //True means hide, false means show
@@ -14,6 +14,10 @@ interface ModalProps {
 
 
 export default function Modal({card, updateCard, modalMode} : ModalProps){
+
+
+
+
     return (
 
     <div className="fixed inset-0 flex justify-center items-center z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -35,10 +39,10 @@ export default function Modal({card, updateCard, modalMode} : ModalProps){
                 <div className="p-6 space-y-6">
                     
                     <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Question</label>
-                    <textarea className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" onChange={() => {}} defaultValue={card.question}></textarea>
+                    <textarea className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" onChange={() => {}} defaultValue={card?.question}></textarea>
 
                     <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Answer</label>
-                    <textarea className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" onChange={() => {}} defaultValue={card.answer}></textarea>
+                    <textarea className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" onChange={() => {}} defaultValue={card?.answer}></textarea>
                     
                 </div>
         

@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import "../App.css"
-import { Card, CardsContext } from "../pages/decks";
+import { Card, CardsContext, ModalCardContext } from "../pages/decks";
 import { ModalContext } from "../pages/decks";
 
 interface RowProps {
@@ -16,7 +16,7 @@ interface TableProps {
 const RowStyled = ({ card } : RowProps) => {
     const { modalHidden, setHidden } = useContext(ModalContext)
     const { cards, setCards } = useContext(CardsContext)
-    //const { modalCard, selectCard } = useContext(ModalCardContext)
+    const { modalCardID, setID } = useContext(ModalCardContext)
 
 
     const toggleIsKnown = (card : Card) => {
@@ -37,8 +37,16 @@ const RowStyled = ({ card } : RowProps) => {
 
     
     const onEdit = () => {
-       // selectCard(() => card)
+        setID(() => card.id)
         setHidden(() => false);
+    }
+
+
+    const updateCard = (id : Number) => {
+        //********** UPDATE BACKEND *************
+
+        //Update frontend state
+        
     }
 
 
