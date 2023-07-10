@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import "../App.css"
-import { Card, CardsContext, ModalCardContext } from "../pages/decks";
-import { ModalContext } from "../pages/decks";
+import { Card, Context } from "../pages/decks";
+
 
 interface RowProps {
     card : Card
@@ -14,10 +14,8 @@ interface TableProps {
 
 
 const RowStyled = ({ card } : RowProps) => {
-    const { modalHidden, setHidden } = useContext(ModalContext)
-    const { cards, setCards } = useContext(CardsContext)
-    const { modalCardID, setID } = useContext(ModalCardContext)
-
+    const { modalHidden, setHidden, cards, setCards, modalCardID, setID } = useContext(Context)
+    
 
     const toggleIsKnown = (card : Card) => {
         //********** UPDATE BACKEND *************
@@ -40,15 +38,8 @@ const RowStyled = ({ card } : RowProps) => {
         setID(() => card.id)
         setHidden(() => false);
     }
-
-
-    const updateCard = (id : Number) => {
-        //********** UPDATE BACKEND *************
-
-        //Update frontend state
-        
-    }
-
+    
+    
 
     //hover:bg-gray-600
     return (
