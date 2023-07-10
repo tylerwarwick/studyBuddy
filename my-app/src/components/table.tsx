@@ -14,7 +14,8 @@ interface TableProps {
 
 
 const RowStyled = ({ card } : RowProps) => {
-    const { modalHidden, setHidden, cards, setCards, modalCardID, setID } = useContext(Context)
+    const { setHidden, cards, setCards, setID, questionText,
+        setQuestionText, answerText, setAnswerText } = useContext(Context)
     
 
     const toggleIsKnown = (card : Card) => {
@@ -36,7 +37,13 @@ const RowStyled = ({ card } : RowProps) => {
     
     const onEdit = () => {
         setID(() => card.id)
-        setHidden(() => false);
+        console.log("Before: " + questionText);
+        console.log("Before: " + answerText);
+        setQuestionText(() => card.question)
+        setAnswerText(() => card.answer)
+        console.log("After: " + questionText);
+        console.log("After: " + answerText);
+        setHidden(false);
     }
     
     

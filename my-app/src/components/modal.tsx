@@ -4,22 +4,27 @@ import Button from "../components/button";
 import { Card } from "../pages/decks";
 
 interface ModalProps {
-    card : Card | undefined
-    updateCard : (id : number | undefined, question : string, answer : string) => void
+    updateCard : () => void
 
     //True means hide, false means show
     modalMode : (bool : boolean) => void
 
+    question : string;
+    answer : string;
+
+    setQuestion : (question : string) => void;
+    setAnswer : (answer : string) => void
+
 }
 
 
-export default function Modal({card, updateCard, modalMode} : ModalProps){
+export default function Modal({updateCard, modalMode, question, answer, setQuestion, setAnswer} : ModalProps){
 
-    
 
-    
-    
-
+    const onSave = () => {
+        updateCard();
+        modalMode(true);
+    }
 
     return (
 
@@ -40,20 +45,20 @@ export default function Modal({card, updateCard, modalMode} : ModalProps){
                 </div>
                 
                 <div className="p-6 space-y-6">
-                        
+                            
                     <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Question</label>
-                    <textarea onChange={(event) => {}} id='question' className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" defaultValue={card?.question}></textarea>
+                    <textarea onChange={(event) => {setQuestion(event.target.value)}} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={question}></textarea>
 
                     <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Answer</label>
-                    <textarea onChange={(event) => {}} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" defaultValue={card?.answer}></textarea>
-                        
+                    <textarea onChange={(event) => {setAnswer(event.target.value)}} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={answer}></textarea>
+                            
                 </div>
-            
-                <div className="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
-                    <Button displayTag={"Save"} clickHandler={() => {}} />
-                    <button onClick={() => modalMode(true)} type="button" className="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Cancel</button>
-                 </div>
                 
+                <div className="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
+                    <Button displayTag={"Save"} clickHandler={() => onSave()} />
+                    <button onClick={() => modalMode(true)} type="button" className="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Cancel</button>
+                </div>
+        
 
             </div>
         </div>

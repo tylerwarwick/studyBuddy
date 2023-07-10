@@ -16,21 +16,25 @@ export interface Card {
 
 //Declare context types and states to share all states necessary
 type ContextType = {
-    modalHidden: boolean;
     setHidden: React.Dispatch<React.SetStateAction<boolean>>;
     cards : Card[];
     setCards: React.Dispatch<React.SetStateAction<Card[]>>;
-    modalCardID : number;
     setID : React.Dispatch<React.SetStateAction<number>>;
+    questionText : string
+    setQuestionText: React.Dispatch<React.SetStateAction<string>>;
+    answerText : string
+    setAnswerText: React.Dispatch<React.SetStateAction<string>>;
   };
 
 const ContextState = {
-   modalHidden: true,
    setHidden: () => {},
    cards : [],
    setCards: () => {},
-   modalCardID : 0,
-   setID: () => {}
+   setID: () => {},
+   questionText : "",
+   setQuestionText : () => {},
+   answerText : "",
+   setAnswerText : () => {}
 }
 const Context = React.createContext<ContextType>(ContextState)
 export { Context }
@@ -48,14 +52,6 @@ export default function Decks(){
     const [questionText, setQuestionText] = useState("");
     const [answerText, setAnswerText] = useState("");
 
-    const onSave = () => {
-        // ******* UPDATE BACKEND HERE *******
-
-
-        //Update frontend
-        updateCard(modalCardID, questionText, answerText)
-        setHidden(true)
-    }
     
 
     //Fetch data from server on refresh
@@ -73,12 +69,12 @@ export default function Decks(){
     }
 
 
-    const updateCard = (id : number | undefined, question : string, answer : string) => {
+    const updateCard = () => {
         //********** UPDATE BACKEND *************
 
         //Update frontend state
         const updateOnChange = cards.map((c) => {
-            if (c.id === id) return {...c, question : question, answer : answer}
+            if (c.id === modalCardID) return {...c, question : questionText, answer : answerText}
 
             return c;
         })
@@ -86,16 +82,25 @@ export default function Decks(){
         setCards(updateOnChange)
     }
 
+    const fetchQuestionEdit = (question : string) => {
+        setQuestionText(question)
+    }
+
+    const fetchAnswerEdit = (answer : string) => {
+        setAnswerText(answer)
+    }
 
     return(
-        <Context.Provider value={{ modalHidden, setHidden, cards, setCards, modalCardID, setID }}>
+        <Context.Provider value={{ setHidden, cards, setCards, setID, questionText, setQuestionText, answerText, setAnswerText }}>
                     <div>
                         <div className="w-full h-screen flex justify-center bg-gray-900">
                             <div className="w-10/12 my-9 overflow-y-auto">
                                 <Table cards={cards} />
                             </div>
                             <div className={modalHidden ? "hidden" : ""}>
-                                <Modal card={cards?.find((c) => c.id === modalCardID)} updateCard={updateCard} modalMode={modalMode} />
+                                <Modal question={questionText} answer={answerText}
+                                updateCard={updateCard} modalMode={modalMode}
+                                setQuestion={fetchQuestionEdit} setAnswer={fetchAnswerEdit}/>
                             </div>
                         </div>
                     </div>
