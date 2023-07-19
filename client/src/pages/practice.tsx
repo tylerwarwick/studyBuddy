@@ -18,9 +18,9 @@ const Practice = () => {
 
     //Fetch data from server on refresh
     useEffect(() => {
-        axios.get("http://localhost:3001/notes")
+        axios.get("http://localhost:3001/classes")
         .then(Response => {
-            setCards(cards.concat(Response.data as Card[]))
+            setCards(cards.concat(Response.data.science as Card[]))
             });
     }, [])
     

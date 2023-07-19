@@ -30,7 +30,7 @@ export default function Navbar() {
     //Set state for hiding/showing mobile menu popup
     const [hiding, setHiding] = useState(true)
 
-    const handleClick = (e : React.MouseEvent) => {setHiding(hiding => !hiding)}
+    const handleClick = () => {setHiding(hiding => !hiding)}
 
     return (
     <div className="sticky top-0 w-full">

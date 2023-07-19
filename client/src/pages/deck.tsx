@@ -1,5 +1,5 @@
 import "../App.css"
-import { MouseEvent, useContext, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import Table from "../components/table"
 import Modal from "../components/modal";
 import axios from "axios";
@@ -45,7 +45,7 @@ export { Context }
 
 
 
-export default function Decks(){
+export default function Deck(){
     const [cards, setCards] = useState<Card[]>([]);
     const [modalHidden, setHidden] = useState(true);
     const [modalCardID, setID] = useState(0);
@@ -56,9 +56,10 @@ export default function Decks(){
 
     //Fetch data from server on refresh
     useEffect(() => {
-        axios.get("http://localhost:3001/notes")
+        axios.get("http://localhost:3001/classes")
         .then(Response => {
-            setCards(cards.concat(Response.data as Card[]))
+            setCards(cards.concat(Response.data.science as Card[]))
+            console.log(Response.data.science)
             });
     }, [])
 
@@ -89,6 +90,7 @@ export default function Decks(){
     const fetchAnswerEdit = (answer : string) => {
         setAnswerText(answer)
     }
+
 
     return(
         <Context.Provider value={{ setHidden, cards, setCards, setID, questionText, setQuestionText, answerText, setAnswerText }}>

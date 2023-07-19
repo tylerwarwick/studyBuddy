@@ -6,6 +6,6 @@ export default function Login(){
         <div className="bg-gray-900 h-screen flex items-center justify-center">
             <LoginForm/>
         </div>
-        
+
     )
 }

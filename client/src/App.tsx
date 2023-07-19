@@ -6,13 +6,14 @@ import Lobby from './pages/lobby';
 import Login from './pages/login';
 import Register from './pages/register';
 import Practice from './pages/practice';
-import Decks from './pages/decks';
+import Deck from './pages/deck';
+import DeckLobby from './pages/deckLobby';
 
 
 function App() {
   
   return (
-    <div className='overflow-hidden'>
+    <div className='overflow-hidden h-screen bg-gray-900'>
       <BrowserRouter>
         <Navbar />
         <Routes>
@@ -20,7 +21,8 @@ function App() {
           <Route path='/login' Component={Login}/>
           <Route path='/register' Component={Register}/>
           <Route path='/practice' Component={Practice}/>
-          <Route path='/deck' Component={Decks}/>
+          <Route path='/deck' Component={Deck}/>
+          <Route path='/test' Component={DeckLobby}/>
         </Routes>
       </BrowserRouter>
     </div>
