@@ -3,6 +3,7 @@ import axios from 'axios';
 import {useState, useEffect} from 'react';
 import CardRender from '../components/cardRender';
 import Button from '../components/button';
+import { useParams } from 'react-router-dom';
 
 interface Card {
     id : number;
@@ -11,17 +12,22 @@ interface Card {
     isKnown : boolean;
 }
 
+type deckID = {a : string}
 
 
 const Practice = () => {
-    const [cards, setCards] = useState<Card[]>([])
+    const [cards, setCards] = useState<Card[]>([]);
+    const params = useParams<deckID>() as string;
 
     //Fetch data from server on refresh
     useEffect(() => {
         axios.get("http://localhost:3001/classes")
         .then(Response => {
-            setCards(cards.concat(Response.data.science as Card[]))
+            setCards(cards.concat(Response.data[Object.values(params)[0]] as Card[]))
+            console.log(Object.values(params)[0])
             });
+
+        
     }, [])
     
    

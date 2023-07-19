@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import "../App.css"
-import { Card, Context } from "../pages/deck";
+import { Card, Context } from "../pages/editDeck";
 
 
 interface RowProps {

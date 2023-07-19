@@ -4,6 +4,7 @@ import Table from "../components/table"
 import Modal from "../components/modal";
 import axios from "axios";
 import React from "react";
+import { useParams } from "react-router-dom";
 
 //Create card interface here and share with other components
 //Might make sense to move this somewhere central in future
@@ -41,24 +42,23 @@ export { Context }
 
 
 
+type deckID = {a : string}
 
-
-
-
-export default function Deck(){
+export default function EditDeck(){
     const [cards, setCards] = useState<Card[]>([]);
     const [modalHidden, setHidden] = useState(true);
     const [modalCardID, setID] = useState(0);
     const [questionText, setQuestionText] = useState("");
     const [answerText, setAnswerText] = useState("");
 
+    const params = useParams<deckID>() as string;
     
 
     //Fetch data from server on refresh
     useEffect(() => {
         axios.get("http://localhost:3001/classes")
         .then(Response => {
-            setCards(cards.concat(Response.data.science as Card[]))
+            setCards(cards.concat(Response.data[Object.values(params)[0]] as Card[]))
             console.log(Response.data.science)
             });
     }, [])

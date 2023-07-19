@@ -48,8 +48,7 @@ export default function Navbar() {
                         
                     <NavLinkStyled DisplayTag='Login' Location='/login'/>
                     <NavLinkStyled DisplayTag='Register' Location='/register'/>
-                    <NavLinkStyled DisplayTag='Practice' Location='/practice'/>
-                    <NavLinkStyled DisplayTag='Deck' Location='/deck'/>
+                    <NavLinkStyled DisplayTag='Decks' Location='/decks'/>
                 
                 </ul>
             </div>
