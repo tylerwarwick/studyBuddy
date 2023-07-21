@@ -9,8 +9,6 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
-const promise = axios.get('http://localhost:3001/notes')
-console.log(promise)
 
 
 root.render(
