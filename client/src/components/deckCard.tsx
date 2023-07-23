@@ -29,13 +29,10 @@ export default function DeckCard({decks : decks, setDecks : setDecks, deckIndex 
             //UPDATEBACKEND WITH STATE VALUES NOW
         }
 
-
-
         else if (matches != 0) {
             setDeckTitle(decks[deckIndex])
             alert("Deck title can't match any other deck titles")
         }
-
             
         else if (len < 2) {
             setDeckTitle(decks[deckIndex])

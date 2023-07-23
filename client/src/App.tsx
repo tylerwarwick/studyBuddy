@@ -13,9 +13,11 @@ import EditDeck from './pages/editDeck';
 function App() {
   
   return (
-    <div className='overflow-hidden h-screen bg-gray-900'>
+    <div className='bg-gray-900 h-screen'>
       <BrowserRouter>
-        <Navbar />
+        <div className='z-50'>
+          <Navbar />
+        </div>
         <Routes>
           <Route path='/' Component={Lobby}/>
           <Route path='/login' Component={Login}/>

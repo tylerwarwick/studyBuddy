@@ -3,6 +3,7 @@ import "../App.css"
 import { Card, Context } from "../pages/editDeck";
 
 
+
 interface RowProps {
     card : Card
 }
@@ -37,26 +38,26 @@ const RowStyled = ({ card } : RowProps) => {
     
     const onEdit = () => {
         setID(() => card.id)
-        console.log("Before: " + questionText);
-        console.log("Before: " + answerText);
         setQuestionText(() => card.question)
         setAnswerText(() => card.answer)
-        console.log("After: " + questionText);
-        console.log("After: " + answerText);
         setHidden(false);
     }
+
+    const onDelete = () => {
+        //NEED TO UPDATE BACKEND
+        //Update frontend state
+        const updateKnown = cards.filter((c) => {return c.id != card.id});
+        setCards(updateKnown)
+    }
+    
+
+
     
     
 
     //hover:bg-gray-600
     return (
         <tr className="border-b bg-gray-800 border-gray-700">
-        <td className="w-4 p-4">
-            <div className="flex items-center">
-                <input id="checkbox-table-1" type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"></input>
-                <label  className="sr-only">checkbox</label>
-            </div>
-        </td>
         <th scope="row" className="px-6 py-4 font-medium text-gray-900 w-2/5 dark:text-white ">
             {card.question}
         </th>
@@ -68,8 +69,9 @@ const RowStyled = ({ card } : RowProps) => {
             
         </td>
 
-        <td className="px-6 py-4">
-            <a onClick={() => onEdit()} className="font-medium text-blue-600 dark:text-blue-500 select-none hover:underline">Edit</a>
+        <td className="px-6 py-4 space-x-3">
+            <a onClick={() => onEdit()} className="font-medium text-blue-600 dark:text-blue-500 select-none hover:underline">Edit</a> 
+            <a onClick={() => onDelete()} className="font-medium text-blue-600 dark:text-blue-500 select-none hover:underline">Delete</a>
         </td>
     </tr>
 
@@ -78,18 +80,13 @@ const RowStyled = ({ card } : RowProps) => {
 
 const Table = ({ cards } : TableProps) => {
    
-
+    
     return (
         <div className="relative overflow-y-scroll overflow-x-autoshadow-md sm:rounded-lg">
         <table className="w-full text-sm text-left text-gray-400">
             <thead className="text-xs text-gray-400 uppercase bg-gray-700 text-gray-400 ">
                 <tr>
-                    <th scope="col" className="p-4">
-                        <div className="flex items-center">
-                            <input id="checkbox-all" type="checkbox" className="w-4 h-4 text-blue-600  rounded focus:ring-blue-600 ring-offset-gray-800 focus:ring-offset-gray-800 focus:ring-2 bg-gray-700 border-gray-600"></input>
-                            <label  className="sr-only">checkbox</label>
-                        </div>
-                    </th>
+                    
                     <th scope="col" className="px-6 py-3">
                         Question
                     </th>
@@ -100,7 +97,7 @@ const Table = ({ cards } : TableProps) => {
                         Rating
                     </th>
                     <th scope="col" className="px-6 py-3">
-                        Action
+                        Actions
                     </th>
                 </tr>
             </thead>

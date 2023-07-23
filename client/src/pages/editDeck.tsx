@@ -5,6 +5,8 @@ import Modal from "../components/modal";
 import axios from "axios";
 import React from "react";
 import { useParams } from "react-router-dom";
+import Button from "../components/button";
+import { PlusIcon } from "../icons/plusIcon";
 
 //Create card interface here and share with other components
 //Might make sense to move this somewhere central in future
@@ -64,12 +66,6 @@ export default function EditDeck(){
     }, [])
 
 
-    
-    const modalMode = (bool : boolean) => {
-        setHidden(() => bool)
-    }
-
-
     const updateCard = () => {
         //********** UPDATE BACKEND *************
 
@@ -83,27 +79,33 @@ export default function EditDeck(){
         setCards(updateOnChange)
     }
 
-    const fetchQuestionEdit = (question : string) => {
-        setQuestionText(question)
-    }
 
-    const fetchAnswerEdit = (answer : string) => {
-        setAnswerText(answer)
-    }
-
+    //<Button displayTag={""} clickHandler={() => {}} />
+    /*
+    <div className="w-10/12 space-y-2">
+                                <button className="text-white w-full bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add New Card </button>
+                                <Table cards={cards} />
+                            </div>
+    */
 
     return(
         <Context.Provider value={{ setHidden, cards, setCards, setID, questionText, setQuestionText, answerText, setAnswerText }}>
-                    <div>
-                        <div className="w-full h-screen flex justify-center bg-gray-900">
-                            <div className="w-10/12 my-9 overflow-y-auto">
+                    <div className="bg-gray-900 w-full h-screen">
+                        <div className="flex flex-col items-center my-4 space-y-2">
+                            <div className="w-10/12">
                                 <Table cards={cards} />
                             </div>
                             <div className={modalHidden ? "hidden" : ""}>
                                 <Modal question={questionText} answer={answerText}
-                                updateCard={updateCard} modalMode={modalMode}
-                                setQuestion={fetchQuestionEdit} setAnswer={fetchAnswerEdit}/>
+                                updateCard={updateCard} setModalMode={setHidden}
+                                setQuestionText={setQuestionText} setAnswerText={setAnswerText}/>
                             </div>
+                        </div>
+
+                        <div className="absolute right-12 bottom-24 ">
+                            <button className="text-white flex justify-center items-center text-5xl font-bold w-24 h-24 rounded-full focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg py-2.5 bg-blue-600 hover:bg-blue-700 focus:ring-blue-800">
+                                <PlusIcon/>
+                            </button>     
                         </div>
                     </div>
         </Context.Provider>

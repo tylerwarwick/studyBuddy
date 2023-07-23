@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import '../App.css';
-import { text } from 'stream/consumers';
+
 
 //Need to accept function as prop so that we can update parent state from child
 interface CardProps {
