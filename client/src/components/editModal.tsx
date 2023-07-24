@@ -18,7 +18,7 @@ interface ModalProps {
 }
 
 
-export default function Modal({updateCard, setModalMode, question, answer, setQuestionText, setAnswerText} : ModalProps){
+export default function EditModal({updateCard, setModalMode, question, answer, setQuestionText, setAnswerText} : ModalProps){
 
 
     const onSave = () => {

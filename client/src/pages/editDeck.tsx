@@ -1,12 +1,13 @@
 import "../App.css"
 import { useEffect, useState } from "react"
 import Table from "../components/table"
-import Modal from "../components/modal";
 import axios from "axios";
 import React from "react";
 import { useParams } from "react-router-dom";
 import Button from "../components/button";
 import { PlusIcon } from "../icons/plusIcon";
+import EditModal from "../components/editModal";
+import { NewCardModal } from "../components/newCardModal";
 
 //Create card interface here and share with other components
 //Might make sense to move this somewhere central in future
@@ -19,7 +20,7 @@ export interface Card {
 
 //Declare context types and states to share all states necessary
 type ContextType = {
-    setHidden: React.Dispatch<React.SetStateAction<boolean>>;
+    setEditHidden: React.Dispatch<React.SetStateAction<boolean>>;
     cards : Card[];
     setCards: React.Dispatch<React.SetStateAction<Card[]>>;
     setID : React.Dispatch<React.SetStateAction<number>>;
@@ -30,7 +31,7 @@ type ContextType = {
   };
 
 const ContextState = {
-   setHidden: () => {},
+   setEditHidden: () => {},
    cards : [],
    setCards: () => {},
    setID: () => {},
@@ -48,7 +49,8 @@ type deckID = {a : string}
 
 export default function EditDeck(){
     const [cards, setCards] = useState<Card[]>([]);
-    const [modalHidden, setHidden] = useState(true);
+    const [editModalHidden, setEditHidden] = useState(true);
+    const [newModalHidden, setNewHidden] = useState(true);
     const [modalCardID, setID] = useState(0);
     const [questionText, setQuestionText] = useState("");
     const [answerText, setAnswerText] = useState("");
@@ -61,7 +63,6 @@ export default function EditDeck(){
         axios.get("http://localhost:3001/classes")
         .then(Response => {
             setCards(cards.concat(Response.data[Object.values(params)[0]] as Card[]))
-            console.log(Response.data.science)
             });
     }, [])
 
@@ -89,21 +90,28 @@ export default function EditDeck(){
     */
 
     return(
-        <Context.Provider value={{ setHidden, cards, setCards, setID, questionText, setQuestionText, answerText, setAnswerText }}>
+        <Context.Provider value={{ setEditHidden, cards, setCards, setID, questionText, setQuestionText, answerText, setAnswerText }}>
                     <div className="bg-gray-900 w-full h-screen">
                         <div className="flex flex-col items-center my-4 space-y-2">
                             <div className="w-10/12">
                                 <Table cards={cards} />
                             </div>
-                            <div className={modalHidden ? "hidden" : ""}>
-                                <Modal question={questionText} answer={answerText}
-                                updateCard={updateCard} setModalMode={setHidden}
+                            <div className={editModalHidden ? "hidden" : ""}>
+                                <EditModal question={questionText} answer={answerText}
+                                updateCard={updateCard} setModalMode={setEditHidden}
                                 setQuestionText={setQuestionText} setAnswerText={setAnswerText}/>
+                            </div>
+                            <div className={newModalHidden ? "hidden" : ""}>
+                                <NewCardModal 
+                                cards={cards} 
+                                setCards={setCards}
+                                setHidden={setNewHidden}
+                                />
                             </div>
                         </div>
 
                         <div className="absolute right-12 bottom-24 ">
-                            <button className="text-white flex justify-center items-center text-5xl font-bold w-24 h-24 rounded-full focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg py-2.5 bg-blue-600 hover:bg-blue-700 focus:ring-blue-800">
+                            <button onClick={() => setNewHidden(false)} className="text-white flex justify-center items-center text-5xl font-bold w-24 h-24 rounded-full focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg py-2.5 bg-blue-600 hover:bg-blue-700 focus:ring-blue-800">
                                 <PlusIcon/>
                             </button>     
                         </div>

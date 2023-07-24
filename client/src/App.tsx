@@ -15,7 +15,7 @@ function App() {
   return (
     <div className='bg-gray-900 h-screen'>
       <BrowserRouter>
-        <div className='z-50'>
+        <div className='z-50 sticky top-0'>
           <Navbar />
         </div>
         <Routes>

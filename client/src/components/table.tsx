@@ -15,7 +15,7 @@ interface TableProps {
 
 
 const RowStyled = ({ card } : RowProps) => {
-    const { setHidden, cards, setCards, setID, questionText,
+    const { setEditHidden, cards, setCards, setID, questionText,
         setQuestionText, answerText, setAnswerText } = useContext(Context)
     
 
@@ -40,7 +40,7 @@ const RowStyled = ({ card } : RowProps) => {
         setID(() => card.id)
         setQuestionText(() => card.question)
         setAnswerText(() => card.answer)
-        setHidden(false);
+        setEditHidden(false);
     }
 
     const onDelete = () => {
