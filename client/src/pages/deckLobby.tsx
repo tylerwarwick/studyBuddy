@@ -16,11 +16,11 @@ export default function DeckLobby() {
         .then(Response => {
             setDecks(Object.keys(Response.data))
             console.log(Object.keys(Response.data))
-
+            
             });
     }, [])
 
-//
+
     return (
         <div className="min-h-screen h-fit bg-gray-900 min-w-screen p-8">
             <div className="flex justify-center m-6">

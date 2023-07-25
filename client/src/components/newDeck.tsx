@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import '../App.css'
 import { AltPlusIcon } from '../icons/altPlusIcon'
+import axios from 'axios';
 
 interface props {
     decks : string[];
@@ -23,6 +24,7 @@ export default function NewDeck({decks : decks, setDecks : setDecks} : props){
         if (matches == 0 && len >= 2){
             console.log("Requirements met")
             setDecks(decks.concat(deckTitle));
+            
 
 
             //UPDATEBACKEND WITH STATE VALUES NOW

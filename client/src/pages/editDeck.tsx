@@ -63,6 +63,8 @@ export default function EditDeck(){
         axios.get("http://localhost:3001/classes")
         .then(Response => {
             setCards(cards.concat(Response.data[Object.values(params)[0]] as Card[]))
+            console.log(Response.data[Object.values(params)[0]])
+            console.log(cards);
             });
     }, [])
 
@@ -111,7 +113,7 @@ export default function EditDeck(){
                         </div>
 
                         <div className="absolute right-12 bottom-24 ">
-                            <button onClick={() => setNewHidden(false)} className="text-white flex justify-center items-center text-5xl font-bold w-24 h-24 rounded-full focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg py-2.5 bg-blue-600 hover:bg-blue-700 focus:ring-blue-800">
+                            <button onClick={() => setNewHidden(false)} className="text-white flex justify-center items-center text-5xl font-bold w-24 h-24 rounded-full focus:ring-4 focus:outline-none focus:ring-blue-300 py-2.5 bg-blue-600 hover:bg-blue-700 focus:ring-blue-800">
                                 <PlusIcon/>
                             </button>     
                         </div>

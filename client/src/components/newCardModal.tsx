@@ -2,11 +2,13 @@ import "../App.css"
 import Button from "./button"
 import { useRef } from "react"
 import { Card } from "../pages/editDeck"
+import axios from "axios";
 
 interface Props {
     cards: Card[];
     setCards: React.Dispatch<React.SetStateAction<Card[]>>
     setHidden: React.Dispatch<React.SetStateAction<boolean>>
+    
 }
 
 
@@ -31,6 +33,9 @@ export const NewCardModal = ({ cards : cards, setCards : setCards, setHidden : s
         setHidden(true)
         questionRef.current!.value = '';
         answerRef.current!.value = '';
+
+        const url = 'http://localhost:3001/classes/science';
+        
         
     }
 
