@@ -4,7 +4,7 @@ import {useState, useEffect} from 'react';
 import CardRender from '../components/cardRender';
 import Button from '../components/button';
 import { useParams } from 'react-router-dom';
-import { createTypeReferenceDirectiveResolutionCache } from 'typescript';
+
 
 interface Card {
     id : number;
@@ -98,13 +98,13 @@ const Practice = () => {
 
         //Reset to first card in deck
         setIndex(() => 0)
-        console.log(cards);
+        
      
     }
 
     //If there is some unknown cards, practice as usual
     if (cards.some((c) => c.isKnown == false)) {
-        console.log(cards)
+       
         return (
             <div className='bg-gray-900 h-screen flex flex-col space-y-3 items-center justify-center select-none'>
                 <CardRender displayText={frontFacing ? cards[index]?.question : cards[index]?.answer} func={flipCard}/>

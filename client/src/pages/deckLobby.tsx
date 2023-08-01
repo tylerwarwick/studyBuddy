@@ -14,8 +14,7 @@ export default function DeckLobby() {
     useEffect(() => {
         axios.get("http://localhost:3001/classes")
         .then(Response => {
-            setDecks(Object.keys(Response.data))
-            console.log(Object.keys(Response.data))
+            setDecks(Object.keys(Response.data));
             
             });
     }, [])
