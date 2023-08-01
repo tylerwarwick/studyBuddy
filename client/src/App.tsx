@@ -13,7 +13,7 @@ import EditDeck from './pages/editDeck';
 function App() {
   
   return (
-    <div className='bg-gray-900 h-screen'>
+    <div className='bg-gray-900 min-h-screen min-w-screen'>
       <BrowserRouter>
         <div className='z-50 sticky top-0'>
           <Navbar />
