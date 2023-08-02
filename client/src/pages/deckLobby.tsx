@@ -23,15 +23,18 @@ export default function DeckLobby() {
 
     return (
         
-        <div className="min-h-screen h-fit bg-gray-900 min-w-full w-fit p-8">
-            <div className="flex justify-center items-center m-6">
-                <div className="grid [@media(min-width:1290px)]:grid-cols-3 gap-10 [@media(max-width:1289px)]:grid-cols-2 [@media(max-width:880px)]:grid-cols-1">
-                    {decks.map((deckName, index) => (
-                        <DeckCard decks={decks} deckIndex={index} setDecks={setDecks}/>             
-                        ))}
-                    <NewDeck decks={decks} setDecks={setDecks}/>
-                </div>
+        <div className="min-h-screen h-full bg-gray-900 w-screen ">
+            <div className="flex justify-center items-center py-6">
+                
+                    <div className="grid [@media(min-width:1290px)]:grid-cols-3 gap-10 [@media(max-width:1289px)]:grid-cols-2 [@media(max-width:880px)]:grid-cols-1">
+                        {decks.map((deckName, index) => (
+                            <DeckCard decks={decks} deckIndex={index} setDecks={setDecks}/>             
+                            ))}
+                        <NewDeck decks={decks} setDecks={setDecks}/>
+                    </div>
+                
             </div>
+            
         </div>
        
     );

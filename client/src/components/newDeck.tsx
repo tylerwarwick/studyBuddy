@@ -62,7 +62,7 @@ export default function NewDeck({decks : decks, setDecks : setDecks} : props){
         
         <div className="relative">
             <a onClick={()=>handleClick()}>
-                <div className="max-w-sm w-96 h-64 px-6 border rounded-lg shadow bg-gray-800 hover:bg-gray-700 border-gray-700">
+                <div className="w-full md:w-96 h-64 px-6 border rounded-lg shadow bg-gray-800 hover:bg-gray-700 border-gray-700">
                     <div className={hidden ? "hidden" : ""}>
                         <div className="absolute top-10 text-6xl text-white left-1/2 transform -translate-x-1/2 text-center">
                             <AltPlusIcon/>

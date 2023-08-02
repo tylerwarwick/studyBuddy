@@ -57,7 +57,7 @@ export default function DeckCard({decks : decks, setDecks : setDecks, deckIndex 
 
     return (
         <div className="relative">
-            <div className="max-w-sm w-96 h-64 px-6 border rounded-lg shadow bg-gray-800 border-gray-700">
+            <div className="max-w-sm w-screen md:w-96 h-64 px-6 border rounded-lg shadow bg-gray-800 border-gray-700">
                 <div className="absolute top-10 left-1/2 transform -translate-x-1/2 text-center">
                     <textarea  ref={ref} onChange={(event) => {setDeckTitle(event.target.value)}} 
                     value={deckTitle} minLength={2} maxLength={20} spellCheck='false'

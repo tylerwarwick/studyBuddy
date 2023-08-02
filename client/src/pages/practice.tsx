@@ -122,7 +122,7 @@ const Practice = () => {
         return (
             <div className='bg-gray-900 h-screen flex flex-col space-y-3 items-center justify-center select-none'>
                 <CardRender displayText={"You've completed all of the questions"} func={flipCard}/>
-                <button onClick={resetDeck} className='text-white focus:ring-4 focus:outline-none font-bold rounded-lg text-lg w-96 h-16 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800'>Reset Deck</button>
+                <button onClick={resetDeck} className='text-white focus:ring-4 focus:outline-none font-bold rounded-lg text-lg w-full md:w-96 h-16 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800'>Reset Deck</button>
             </div>
         );
     }
