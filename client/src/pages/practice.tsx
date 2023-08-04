@@ -25,10 +25,11 @@ const Practice = () => {
     //Fetch data from server on refresh
     useEffect(() => {
         const getData = async () => {
-            const data = (await axios.get("http://localhost:3001/classes")).data;
+            const data = (await axios.get("http://localhost:3001/")).data;
+            console.log('Hello')
             const arr = data[Object.values(params)[0]] as Card[];
             setCards(arr);
-            setIndex(arr.findIndex((c) => c.isKnown == false))
+            setIndex(arr.findIndex((c) => c.isKnown === false))
         }
         
         getData();
@@ -47,18 +48,18 @@ const Practice = () => {
     //Loop through deck forever
     const loopIndex = () => {
         //There has to be an unknown card in the deck
-        if (cards.some((c) => c.isKnown == false)){
+        if (cards.some((c) => c.isKnown === false)){
             //Find the next unknown card after the current card
-            const nextCardId = (cards.slice(index+1).find((c) => c.isKnown == false))?.id;
+            const nextCardId = (cards.slice(index+1).find((c) => c.isKnown === false))?.id;
 
             //If all cards beyond current index are known, find first card from front of deck
-            if (nextCardId == undefined) setIndex(() => cards.findIndex((c) => c.isKnown == false));
+            if (nextCardId === undefined) setIndex(() => cards.findIndex((c) => c.isKnown === false));
 
             //Otherwise find the next card that's unknown as per original plan
             else {
                 //Just need to account for being at the end of the deck
-                index == cards.length - 1 ? setIndex(() => cards.findIndex((c) => c.isKnown == false))
-                : setIndex(() => cards.findIndex((c) => c.id == nextCardId));
+                index === cards.length - 1 ? setIndex(() => cards.findIndex((c) => c.isKnown === false))
+                : setIndex(() => cards.findIndex((c) => c.id === nextCardId));
             }
         }
         
@@ -103,7 +104,7 @@ const Practice = () => {
     }
 
     //If there is some unknown cards, practice as usual
-    if (cards.some((c) => c.isKnown == false)) {
+    if (cards.some((c) => c.isKnown === false)) {
        
         return (
             <div className='bg-gray-900 h-screen flex flex-col space-y-3 items-center justify-center select-none'>

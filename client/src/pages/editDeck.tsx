@@ -60,7 +60,7 @@ export default function EditDeck(){
 
     //Fetch data from server on refresh
     useEffect(() => {
-        axios.get("http://localhost:3001/classes")
+        axios.get("http://localhost:3001/")
         .then(Response => {
             setCards(cards.concat(Response.data[Object.values(params)[0]] as Card[]))
             console.log(Response.data[Object.values(params)[0]])

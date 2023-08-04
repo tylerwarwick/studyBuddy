@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import {BrowserRouter,  Route, Routes} from 'react-router-dom';
 import Navbar from './components/navbar'
@@ -10,25 +10,42 @@ import DeckLobby from './pages/deckLobby';
 import EditDeck from './pages/editDeck';
 
 
+type ContextType = {
+  user: string;
+  setUser : React.Dispatch<React.SetStateAction<string>>
+  
+};
+
+const ContextState = {
+  user: '',
+  setUser : () => {}
+};
+
+const UserContext = React.createContext<ContextType>(ContextState)
+export { UserContext };
+
 function App() {
+  const [user, setUser] = useState('');
+
   
   return (
-    <div className='overflow-clip bg-gray-900'>
-      <BrowserRouter>
-        <div className='z-50 sticky top-0'>
-          <Navbar />
-        </div>
-        <Routes>
-          <Route path='/' Component={Lobby}/>
-          <Route path='/login' Component={Login}/>
-          <Route path='/register' Component={Register}/>
-          <Route path='/practice/:deckID' Component={Practice}/>
-          <Route path='/edit-deck/:deckID' Component={EditDeck}/>
-          <Route path='/decks' Component={DeckLobby}/>
-        </Routes>
-      </BrowserRouter>
-    </div>
-    
+    <UserContext.Provider value={{ user, setUser }}>
+      <div className='overflow-clip bg-gray-900'>
+        <BrowserRouter>
+          <div className='z-50 sticky top-0'>
+            <Navbar />
+          </div>
+          <Routes>
+            <Route path='/' Component={Lobby}/>
+            <Route path='/login' Component={Login}/>
+            <Route path='/register' Component={Register}/>
+            <Route path='/practice/:deckID' Component={Practice}/>
+            <Route path='/edit-deck/:deckID' Component={EditDeck}/>
+            <Route path='/decks' Component={DeckLobby}/>
+          </Routes>
+        </BrowserRouter>
+      </div>
+    </UserContext.Provider>
   );
 }
 

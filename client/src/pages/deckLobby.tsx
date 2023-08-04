@@ -1,4 +1,4 @@
-import { SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "../App.css"
 import DeckCard from "../components/deckCard";
 import axios from "axios";
@@ -8,12 +8,15 @@ import NewDeck from "../components/newDeck";
 
 
 
+
 export default function DeckLobby() {
     const [decks, setDecks] = useState<string[]>([]);
 
     useEffect(() => {
-        axios.get("http://localhost:3001/classes")
+        axios.get("http://localhost:3001/")
         .then(Response => {
+            console.log('Hello')
+            console.log(Object.keys(Response.data))
             setDecks(Object.keys(Response.data));
             
             });
