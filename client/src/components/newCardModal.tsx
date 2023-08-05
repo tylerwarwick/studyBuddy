@@ -1,8 +1,9 @@
 import "../App.css"
 import Button from "./button"
 import { useRef } from "react"
-import { Card } from "../pages/editDeck"
+import { Card } from "../types/card";
 import axios from "axios";
+
 
 interface Props {
     cards: Card[];
@@ -15,15 +16,14 @@ interface Props {
 
 
 export const NewCardModal = ({ cards : cards, setCards : setCards, setHidden : setHidden} : Props) => {
-    const questionRef = useRef<HTMLTextAreaElement>(null)
-    const answerRef = useRef<HTMLTextAreaElement>(null)
-    const formRef = useRef<HTMLFormElement>(null)
+    const questionRef = useRef<HTMLTextAreaElement>(null);
+    const answerRef = useRef<HTMLTextAreaElement>(null);
 
     const handleSubmit = (event : React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         
         const newCard : Card = {
-            id : cards.length + 1,
+            id : (Math.random()).toString(),
             question : questionRef.current!.value,
             answer : answerRef.current!.value,
             isKnown : false
@@ -33,9 +33,6 @@ export const NewCardModal = ({ cards : cards, setCards : setCards, setHidden : s
         setHidden(true)
         questionRef.current!.value = '';
         answerRef.current!.value = '';
-
-        const url = 'http://localhost:3001/classes/science';
-        
         
     }
 

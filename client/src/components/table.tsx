@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import "../App.css"
-import { Card, Context } from "../pages/editDeck";
+import { Context } from "../pages/editDeck";
+import { Card } from "../types/card";
 
 
 

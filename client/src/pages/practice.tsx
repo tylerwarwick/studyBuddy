@@ -4,14 +4,7 @@ import {useState, useEffect} from 'react';
 import CardRender from '../components/cardRender';
 import Button from '../components/button';
 import { useParams } from 'react-router-dom';
-
-
-interface Card {
-    id : number;
-    question : string;
-    answer : string;
-    isKnown : boolean;
-}
+import { Card } from '../types/card';
 
 type deckID = {a : string}
 

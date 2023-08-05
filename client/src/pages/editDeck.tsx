@@ -8,22 +8,14 @@ import Button from "../components/button";
 import { PlusIcon } from "../icons/plusIcon";
 import EditModal from "../components/editModal";
 import { NewCardModal } from "../components/newCardModal";
-
-//Create card interface here and share with other components
-//Might make sense to move this somewhere central in future
-export interface Card {
-    id : number;
-    question : string;
-    answer : string;
-    isKnown : boolean;
-}
+import { Card } from "../types/card";
 
 //Declare context types and states to share all states necessary
 type ContextType = {
     setEditHidden: React.Dispatch<React.SetStateAction<boolean>>;
     cards : Card[];
     setCards: React.Dispatch<React.SetStateAction<Card[]>>;
-    setID : React.Dispatch<React.SetStateAction<number>>;
+    setID : React.Dispatch<React.SetStateAction<string>>;
     questionText : string
     setQuestionText: React.Dispatch<React.SetStateAction<string>>;
     answerText : string
@@ -51,7 +43,7 @@ export default function EditDeck(){
     const [cards, setCards] = useState<Card[]>([]);
     const [editModalHidden, setEditHidden] = useState(true);
     const [newModalHidden, setNewHidden] = useState(true);
-    const [modalCardID, setID] = useState(0);
+    const [modalCardID, setID] = useState('');
     const [questionText, setQuestionText] = useState("");
     const [answerText, setAnswerText] = useState("");
 

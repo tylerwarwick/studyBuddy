@@ -1,15 +1,19 @@
 import express from 'express'
 import cors from 'cors'
 const app = express()
+import Card from './db/models/card';
 
-const allowedOrigins = ['http://localhost:3000'];
+
+
+//Setting up cors
+const allowedOrigins = ['http://localhost:3000/'];
 const options: cors.CorsOptions = {
   origin: allowedOrigins
 };
-
 app.use(cors(options))
 
-const notes = 
+
+const cards = 
   {
       
       "science" : 
@@ -143,11 +147,15 @@ const notes =
 
 
 app.get('/', (request, response) => {
-  response.send(notes)
+  response.json(cards);
 })
 
-app.get('/api/notes', (request, response) => {
-  
+
+app.get('/test', (request, response) => {
+  Card.findOne({}).then(cards => {
+    response.json(cards);
+    
+  })
 })
 
 

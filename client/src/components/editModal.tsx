@@ -1,7 +1,7 @@
 import { MouseEvent, useState } from "react";
 import "../App.css"
 import Button from "./button";
-import { Card } from "../pages/editDeck";
+import { Card } from "../types/card";
 
 interface ModalProps {
     updateCard : () => void
