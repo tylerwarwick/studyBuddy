@@ -5,6 +5,7 @@ import Card from './db/models/card';
 import Deck from './db/models/deck';
 import User from './db/models/user';
 import usersRouter from './controllers/users'
+import loginRouter from './controllers/login';
 
 
 app.use(express.json())
@@ -169,6 +170,10 @@ app.get('/user', (request, response) => {
 
 
 app.use('/new-user', usersRouter);
+
+
+app.use('/login', loginRouter);
+
 
 
 const PORT = process.env.PORT;

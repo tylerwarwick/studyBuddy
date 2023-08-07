@@ -1,7 +1,7 @@
 import axios from 'axios'
 import '../App.css'
 import { useState } from 'react'
-
+import {useNavigate} from 'react-router-dom';
 
 // Registrationform
 export default function RegistrationForm() {
@@ -9,18 +9,38 @@ export default function RegistrationForm() {
     const [confirmUn, setConfirmUn] = useState('');
     const [pw, setPw] = useState('');
     const [confirmPw, setConfirmPw] = useState('');
+    const navigate = useNavigate();
+
 
     const handleSubmit = (event : React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (un === confirmUn && pw === confirmPw){
-            
+            const newUser = async () => {
+                try{
+                    await axios.post('http://localhost:3001/new-user', {username : un, password : pw});
+                    navigate('/decks')
+
+                    //Need to update with login auth token
+                }
+
+                catch (err){
+                    alert("Username is already under use")
+                }
+            }
+
+            newUser();
+        }
+
+        else {
+            if (un !== confirmUn) alert("Usernames must match!");
+            if (pw !== confirmPw) alert("Passwords must match!");
         }
     }
 
     return (
         
   <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
-      <form className="space-y-6" action="#" onSubmit={(event) => {}}>
+      <form className="space-y-6" action="#" onSubmit={(event) => handleSubmit(event)}>
           <h5 className="text-xl font-medium text-gray-900 dark:text-white">Create account</h5>
           <div>
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
