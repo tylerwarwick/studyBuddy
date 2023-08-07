@@ -36,7 +36,7 @@ export default function Navbar() {
 
     const handleClick = () => {setHiding(hiding => !hiding)}
 
-    if (user == ''){
+    if (user === null){
     return (
     <div className="sticky top-0 w-full">
         <nav className="bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-600 border-b">
@@ -52,7 +52,6 @@ export default function Navbar() {
                 <ul id='navbar' className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                     <NavLinkStyled DisplayTag='Login' Location='/login'/>
                     <NavLinkStyled DisplayTag='Register' Location='/register'/>
-                    <NavLinkStyled DisplayTag='Decks' Location='/decks'/>
                 </ul>
             </div>
         </div>

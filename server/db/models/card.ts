@@ -1,9 +1,10 @@
 import mongoose, { Document, Schema } from 'mongoose';
-import * as dotenv from "dotenv";
+import dotenv from 'dotenv';
 
 dotenv.config();
+const url = process.env.MONGODB_URI!;
 
-const url = 'mongodb+srv://tylerwarwicksignup:CHnJsFpxGdp9bJt5@cluster0.egmbsoi.mongodb.net/StudyBuddy?retryWrites=true&w=majority';
+
 mongoose.set('strictQuery',false);
 
 mongoose.connect(url)

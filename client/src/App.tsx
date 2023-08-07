@@ -8,16 +8,16 @@ import Register from './pages/register';
 import Practice from './pages/practice';
 import DeckLobby from './pages/deckLobby';
 import EditDeck from './pages/editDeck';
-
+import { IUser } from './types/user';
 
 type ContextType = {
-  user: string;
-  setUser : React.Dispatch<React.SetStateAction<string>>
+  user: IUser | null;
+  setUser : React.Dispatch<React.SetStateAction<IUser | null>>
   
 };
 
 const ContextState = {
-  user: '',
+  user: null,
   setUser : () => {}
 };
 
@@ -25,7 +25,7 @@ const UserContext = React.createContext<ContextType>(ContextState)
 export { UserContext };
 
 function App() {
-  const [user, setUser] = useState('');
+  const [user, setUser] = useState<IUser | null>(null);
 
   
   return (

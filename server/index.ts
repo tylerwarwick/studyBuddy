@@ -2,19 +2,16 @@ import express from 'express'
 import cors from 'cors'
 const app = express()
 import Card from './db/models/card';
+import Deck from './db/models/deck';
+import User from './db/models/user';
+import usersRouter from './controllers/users'
 
 
+app.use(express.json())
 
 //Setting up cors
 app.use(cors())
 
-
-const card = {
-  "id" : 1,
-  "question" : "What is the powerhouse of the cell?",
-  "answer" : "Mitochondria",
-  "isKnown" : false
-}
 
 const cards = 
   {
@@ -152,14 +149,29 @@ app.get('/', (request, response) => {
 })
 
 
-app.get('/test', (request, response) => {
+app.get('/cards', (request, response) => {
   Card.findOne({}).then(cards => {
     response.json(cards);
   }) 
 })
 
+app.get('/decks', (request, response) => {
+    Deck.findOne({}).then(decks => {
+      response.json(decks);
+    }) 
+  })
 
-const PORT = 3001
+app.get('/user', (request, response) => {
+    User.findOne({}).then(users => {
+      response.json(users);
+    }) 
+})
+
+
+app.use('/new-user', usersRouter);
+
+
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
