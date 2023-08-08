@@ -19,13 +19,15 @@ export interface ICard extends Document{
     question : string;
     answer : string;
     isKnown : boolean;
+    deck: string;
 }
 
 
 const cardSchema: Schema  = new mongoose.Schema({
     question: String,
     answer: String,
-    isKnown: Boolean
+    isKnown: Boolean,
+    deck: {type: mongoose.Types.ObjectId, ref: 'Deck'}
 })
 
 
