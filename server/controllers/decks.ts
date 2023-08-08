@@ -10,6 +10,7 @@ dotenv.config();
 
 const deckRouter = Router();
 
+//Need to circle back and handle expired token better
 deckRouter.post('/', async (request, response) => {
    
     const authorization = request.get('authorization');
@@ -40,6 +41,33 @@ deckRouter.post('/', async (request, response) => {
     user.decks = user.decks.concat(savedDeck._id)
     await user.save()
     response.json(savedDeck)
+})
+
+deckRouter.get('/', async (request, response) => {
+    //Get auth token
+    const authorization = request.get('authorization');
+
+    //Verify that auth token exists
+    if (!(authorization && authorization.startsWith('Bearer '))) {
+        return response.status(400).json({error: 'Invalid Token'});
+    }
+    
+    //Need better way to verify it hasn't expired
+    const token = authorization.replace('Bearer ', '');
+    const decodedToken : JwtPayload = jsonWebToken.verify(token, process.env.SECRET!) as JwtPayload;
+    if (!decodedToken.id) {
+        return response.status(401).json({ error: 'token invalid, Try loggin in again' })
+    }
+
+
+    const user = await User.findById(decodedToken.id)
+    if (!user) return response.status(401).json({ error: 'token invalid, Try loggin in again' })
+    
+    const decks = await Deck.find({ '_id': { $in: user.decks } });
+
+    console.log(decks)
+
+    response.status(200).json(decks)
 })
 
 export default deckRouter;

@@ -29,11 +29,11 @@ const deckSchema: Schema  = new mongoose.Schema({
 deckSchema.set('toJSON', {
     transform: (document, returnedObject) => {
       returnedObject.id = returnedObject._id.toString()
-      delete returnedObject._id
+      delete returnedObject._id;
+      delete returnedObject.__v;
     }
   })
 
   
-
 const Deck = mongoose.model<IDeck>('Deck', deckSchema, 'decks');
 export default Deck;

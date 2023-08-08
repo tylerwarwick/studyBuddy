@@ -19,13 +19,6 @@ app.get('/cards', (request, response) => {
   }) 
 })
 
-app.get('/decks', (request, response) => {
-    Deck.findOne({}).then(decks => {
-      response.json(decks);
-    }) 
-  })
-
-
 //Set middleware for private routes that token must be present for
 
 app.get('/user', (request, response) => {
@@ -40,7 +33,7 @@ app.use('/new-user', usersRouter);
 
 app.use('/login', loginRouter);
 
-app.use('/new-deck', deckRouter);
+app.use('/deck', deckRouter);
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
