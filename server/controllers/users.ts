@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt'
 import { Router } from 'express'
 import User from "../db/models/user"
+import mongoose from 'mongoose';
 
 const usersRouter = Router();
 
@@ -25,11 +26,14 @@ usersRouter.post('/', async (request, response) => {
   }
   
   //Db may spit out not unique error
-  //Could come back and split up responses for different errors beyond duplicate username
   catch(err) {
-    response.status(401).json({error: "Username is taken"})
-  }
+    console.log(err)
+    if (err instanceof mongoose.Error.ValidationError){
+      response.status(400).json({error: "Username is taken"})
+    }
 
+    else response.status(400).json({error: "Issue communicating with server"})
+  }
   
 })
 

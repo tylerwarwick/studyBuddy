@@ -23,7 +23,7 @@ loginRouter.post('/', async (request, response) => {
   
     //If either username or pw is wrong, throw back 401 error
     if (!(user && passwordCorrect)) {
-      return response.status(401).json({
+      return response.status(400).json({
         error: 'invalid username or password'
       })
     }
@@ -35,7 +35,11 @@ loginRouter.post('/', async (request, response) => {
     }
     
     //Generate token
-    const token = jsonWebToken.sign(userForToken, process.env.SECRET!)
+    //Expires in 2 hours
+    const token = jsonWebToken.sign(
+        userForToken, 
+        process.env.SECRET!,
+        {expiresIn: 60 * 60 * 2})
     
     //By this point the username and pw have been verified
     //Respond with 200 response code and token for frontend
