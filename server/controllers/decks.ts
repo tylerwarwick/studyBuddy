@@ -1,11 +1,7 @@
-import jsonWebToken, { JwtPayload } from 'jsonwebtoken';
-import { Router, Request, Response } from 'express'
+import { Router } from 'express'
 import dotenv from 'dotenv'
-import User from '../db/models/user';
 import Deck from '../db/models/deck';
 import Card from '../db/models/card';
-import mongoose from 'mongoose';
-import { get, request } from 'http';
 import { getUser } from './auth';
 
 
@@ -52,8 +48,6 @@ deckRouter.delete('/', async (request, response) => {
     await Deck.findByIdAndDelete(deckId);
 
     //Delete all cards from that deck
-    const cards = await Card.find({deck : deckId});
-    
     await Card.deleteMany({deck : deckId}) 
 
     response.status(204).json({})

@@ -1,6 +1,5 @@
 import jsonWebToken, { JwtPayload } from 'jsonwebtoken';
-
-import { RequestHandler, Request, Response } from 'express'
+import { RequestHandler, Request } from 'express'
 import dotenv from 'dotenv'
 import User from '../db/models/user';
 

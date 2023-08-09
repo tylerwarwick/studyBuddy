@@ -1,10 +1,8 @@
-import jsonWebToken, { JwtPayload } from 'jsonwebtoken';
-import { Router, Request, Response } from 'express'
+import { Router } from 'express'
 import dotenv from 'dotenv'
-import Deck from '../db/models/deck';
 import Card from '../db/models/card';
 import mongoose from 'mongoose';
-import { request } from 'http';
+
 
 dotenv.config();
 
@@ -19,4 +17,33 @@ cardRouter.post('/', async (request, response) => {
         isKnown : false,
         deck : new mongoose.Types.ObjectId(deckId)
     })
+
+    await card.save();
+    return response.status(200).json(card)
 })
+
+cardRouter.get('/', async (request, response) => {
+    const { deckId } = request.body;
+
+    const cards = await Card.find({deck: deckId})
+    return response.status(200).json(cards)
+})
+
+cardRouter.delete('/', async (request, response) => {
+    const { cardId } = request.body;
+
+    await Card.findByIdAndDelete(cardId);
+    return response.status(204).json({})
+})
+
+cardRouter.put('/', async (request, response) => {
+    const { question, answer, isKnown, cardId  } = request.body;
+
+    const card = await Card.findByIdAndUpdate(cardId, 
+        {question: question, answer: answer, isKnown: isKnown}, 
+        {returnOriginal: false});
+
+    return response.status(200).json(card)
+})
+
+export default cardRouter;
