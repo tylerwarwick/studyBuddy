@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { response } from 'express'
 import cors from 'cors'
 const app = express()
 import Card from './db/models/card';
@@ -7,6 +7,7 @@ import User from './db/models/user';
 import usersRouter from './controllers/users'
 import loginRouter from './controllers/login';
 import deckRouter from './controllers/decks';
+import { verifyToken } from './controllers/auth';
 
 
 app.use(express.json())
@@ -28,10 +29,17 @@ app.get('/user', (request, response) => {
 })
 
 
+
+
 app.use('/new-user', usersRouter);
 
 
+
 app.use('/login', loginRouter);
+
+//Everything beyond is token verified 
+app.use(verifyToken);
+
 
 app.use('/deck', deckRouter);
 
