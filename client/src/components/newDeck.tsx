@@ -2,10 +2,11 @@ import { useRef, useState } from 'react';
 import '../App.css'
 import { AltPlusIcon } from '../icons/altPlusIcon'
 import axios from 'axios';
+import { Deck } from '../types/deck';
 
 interface props {
-    decks : string[];
-    setDecks : React.Dispatch<React.SetStateAction<string[]>>
+    decks : Deck[];
+    setDecks : React.Dispatch<React.SetStateAction<Deck[]>>
 }
 
 
@@ -16,28 +17,18 @@ export default function NewDeck({decks : decks, setDecks : setDecks} : props){
 
 
     const updateDecks = () => {
-        //Check if there is any repeats
-        const matches = (decks.filter((d) => d == deckTitle)).length;
         //Check to make sure length of new possible name is atleast 2
         const len = deckTitle.length;
 
-        if (matches == 0 && len >= 2){
+        if (len >= 2){
             console.log("Requirements met")
-            setDecks(decks.concat(deckTitle));
-            
+            setDecks(decks.concat());
+            //axios.post()
 
 
             //UPDATEBACKEND WITH STATE VALUES NOW
         }
-
-        else if (matches != 0) {
-            alert("Deck title can't match any other deck titles")
-        }
-            
-        else if (len < 2) {
-            alert("Deck title must be atleast 2 characters long")
-        }
-
+  
         setHidden(false)
         setDeckTitle("")
         

@@ -3,6 +3,7 @@ import "../App.css"
 import DeckCard from "../components/deckCard";
 import axios from "axios";
 import NewDeck from "../components/newDeck";
+import { Deck } from "../types/deck";
 
 
 
@@ -10,14 +11,14 @@ import NewDeck from "../components/newDeck";
 
 
 export default function DeckLobby() {
-    const [decks, setDecks] = useState<string[]>([]);
+    const [decks, setDecks] = useState<Deck[]>([]);
 
     useEffect(() => {
-        axios.get("http://localhost:3001/")
+        axios.get("http://localhost:3001/decks")
         .then(Response => {
             console.log('Hello')
-            console.log(Object.keys(Response.data))
-            setDecks(Object.keys(Response.data));
+            console.log(Response.data)
+            setDecks(Response.data);
             
             });
     }, [])

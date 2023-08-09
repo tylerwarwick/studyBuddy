@@ -1,21 +1,50 @@
+import { useContext, useState } from 'react';
 import '../App.css';
-
-
+import LoginService from '../services/loginService';
+import { UserContext } from '../services/userContext';
+import { useNavigate } from 'react-router-dom';
 
 // Login form
 export default function LoginForm() {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const { user, setUser } = useContext(UserContext);
+    const navigate = useNavigate();
+
+    const handleSubmit = (event : React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const tryLogin = async () => {
+            try {
+                const response = await LoginService.login(username, password);
+                if(response.data.token){
+                    setUser(response.data);
+                    window.localStorage.setItem('user', JSON.stringify(response.data))
+                    navigate('/decks')
+                }
+            }   
+
+            catch (error) {
+                alert("Login Failed");
+            }
+        }
+
+        tryLogin();
+    }
+    
+
+
     return (
         
   <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
-      <form className="space-y-6" action="#">
+      <form className="space-y-6" onSubmit={event => handleSubmit(event)}>
           <h5 className="text-xl font-medium text-gray-900 dark:text-white">Sign in</h5>
           <div>
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
-              <input type="username" name="username" id="username" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="username" required />
+              <input onChange={event => setUsername(event.target.value)} type="username" name="username" id="username" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="username" required />
           </div>
           <div>
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-              <input type="password" name="password" id="password" placeholder="••••••••••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
+              <input onChange={event => setPassword(event.target.value)} type="password" name="password" id="password" placeholder="••••••••••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
           </div>
           <div className="flex items-start">
               <div className="flex items-start">

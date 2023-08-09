@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import {BrowserRouter,  Route, Routes} from 'react-router-dom';
 import Navbar from './components/navbar'
@@ -9,25 +9,11 @@ import Practice from './pages/practice';
 import DeckLobby from './pages/deckLobby';
 import EditDeck from './pages/editDeck';
 import { IUser } from './types/user';
-
-type ContextType = {
-  user: IUser | null;
-  setUser : React.Dispatch<React.SetStateAction<IUser | null>>
-  
-};
-
-const ContextState = {
-  user: null,
-  setUser : () => {}
-};
-
-const UserContext = React.createContext<ContextType>(ContextState)
-export { UserContext };
+import { UserContext } from './services/userContext';
 
 function App() {
   const [user, setUser] = useState<IUser | null>(null);
 
-  
   return (
     <UserContext.Provider value={{ user, setUser }}>
       <div className='overflow-clip bg-gray-900'>

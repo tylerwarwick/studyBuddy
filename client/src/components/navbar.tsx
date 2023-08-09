@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import '../App.css';
 import {useState} from 'react';
 import { NavLink } from "react-router-dom";
-import { UserContext } from '../App';
+import { UserContext } from '../services/userContext';
 
 
 interface NavLinkProps {

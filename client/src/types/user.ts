@@ -1,6 +1,4 @@
 export interface IUser {
-    id : string;
+    token : string;
     username : string;
-    password : string;
-    decks : string[];
 }
