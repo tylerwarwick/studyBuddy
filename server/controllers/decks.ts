@@ -28,7 +28,7 @@ deckRouter.post('/', async (request, response) => {
 
 deckRouter.get('/', async (request, response) => {
    const user = await getUser(request)
-   if (!user) return response.status(400).json({Error: "User not found, try logging in again"})
+   if (!user)return response.status(400).json({Error: "User not found, try logging in again"})
    
    const decks = await Deck.find({ '_id': { $in: user.decks } });
    response.status(200).json(decks);

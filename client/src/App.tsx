@@ -14,6 +14,25 @@ import { UserContext } from './services/userContext';
 function App() {
   const [user, setUser] = useState<IUser | null>(null);
 
+  useEffect(() => {
+    const getUser = async () => {
+      const userJson : IUser = await JSON.parse(localStorage.getItem("user")!);
+      console.log(userJson);
+      if (userJson) setUser(() => userJson);
+    }
+
+    const foo = async () => {
+      await getUser();
+      console.log(user);
+    }
+    
+    foo();
+
+    
+  
+  }, [])
+
+  
   return (
     <UserContext.Provider value={{ user, setUser }}>
       <div className='overflow-clip bg-gray-900'>

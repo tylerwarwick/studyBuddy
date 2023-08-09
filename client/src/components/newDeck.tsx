@@ -2,35 +2,38 @@ import { useRef, useState } from 'react';
 import '../App.css'
 import { AltPlusIcon } from '../icons/altPlusIcon'
 import axios from 'axios';
-import { Deck } from '../types/deck';
+import { IDeck } from '../types/deck';
+import DeckService from '../services/deckService';
+import { useNavigate } from 'react-router-dom';
 
-interface props {
-    decks : Deck[];
-    setDecks : React.Dispatch<React.SetStateAction<Deck[]>>
+interface newDeckCardProps {
+    decks : IDeck[];
+    setDecks : React.Dispatch<React.SetStateAction<IDeck[]>>;
 }
 
 
-export default function NewDeck({decks : decks, setDecks : setDecks} : props){
+export default function NewDeck({decks : decks, setDecks : setDecks} : newDeckCardProps){
     const ref = useRef<HTMLTextAreaElement>(null);
     const [deckTitle, setDeckTitle] = useState("")
     const [hidden, setHidden] = useState(false)
+    const navigate = useNavigate()
 
+    const updateDecks = async () => {
+        //Update backend
+        //Get response data 
+        //If null prompt the user to login again their token is expired
+        const newDeck = await DeckService.newDeck(deckTitle);
+        if (newDeck === null) return navigate('/login');
 
-    const updateDecks = () => {
-        //Check to make sure length of new possible name is atleast 2
-        const len = deckTitle.length;
+        //Type cast data to deck
+        const newDeckObj : IDeck = newDeck as IDeck
 
-        if (len >= 2){
-            console.log("Requirements met")
-            setDecks(decks.concat());
-            //axios.post()
+        //Append to frontend state
+        setDecks(deck => decks.concat(newDeckObj))
 
-
-            //UPDATEBACKEND WITH STATE VALUES NOW
-        }
-  
-        setHidden(false)
-        setDeckTitle("")
+        //Reset new deck card to blank
+        setDeckTitle(() => '')
+        setHidden(false);
         
     }
 

@@ -10,10 +10,10 @@ const verifyToken : RequestHandler =  async (request, response, next) => {
     
     //Get auth token
     const authorization = request.get('authorization');
-
+ 
     //Verify that auth token exists
     if (!(authorization && authorization.startsWith('Bearer '))) {
-        console.log("No bear")
+        console.log("No bearer prefix")
         return response.status(400).json({error: 'Invalid Token'});
     }
 
@@ -22,6 +22,7 @@ const verifyToken : RequestHandler =  async (request, response, next) => {
     try {
         decodedToken  = jsonWebToken.verify(token, process.env.SECRET!) as JwtPayload;
     } catch (error) {
+        console.log("Bad token")
         return response.status(401).json({ error: 'token invalid, Try loggin in again' })
     }
   
@@ -32,8 +33,10 @@ const verifyToken : RequestHandler =  async (request, response, next) => {
 
 
     const user = await User.findById(decodedToken.id)
-    if (!user) return response.status(401).json({ error: 'User not found, Try loggin in again' });
-
+    if (!user) {
+        console.log("No User")
+        return response.status(401).json({ error: 'User not found, Try loggin in again' });
+    }
 
     return next(); 
 }  
