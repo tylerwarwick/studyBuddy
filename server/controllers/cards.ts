@@ -22,14 +22,14 @@ cardRouter.post('/', async (request, response) => {
     return response.status(200).json(card)
 })
 
-cardRouter.get('/', async (request, response) => {
-    const { deckId } = request.body;
-
-    const cards = await Card.find({deck: deckId})
+cardRouter.get('/:deckId', async (request, response) => {
+    const deckId = request.params.deckId;
+    console.log(deckId);
+    const cards = await Card.find({deck: new mongoose.Types.ObjectId(deckId)})
     return response.status(200).json(cards)
 })
 
-cardRouter.delete('/', async (request, response) => {
+cardRouter.delete('/', async (request, response) => {  
     const { cardId } = request.body;
 
     await Card.findByIdAndDelete(cardId);
