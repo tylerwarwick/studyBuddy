@@ -7,7 +7,13 @@ class LoginService {
         const response = await axios.post(baseUrl+'login', {username: username, password: password})
         return response
     }
-}
 
+    static logout = () => {
+        localStorage.clear();
+        //Need to navigate to login as well
+    }
+
+}
+ 
 
 export default LoginService

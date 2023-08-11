@@ -2,6 +2,7 @@ import axios from 'axios'
 import '../App.css'
 import { useState } from 'react'
 import {useNavigate} from 'react-router-dom';
+import LoginService from '../services/loginService';
 
 // Registrationform
 export default function RegistrationForm() {
@@ -18,6 +19,7 @@ export default function RegistrationForm() {
             const newUser = async () => {
                 try{
                     await axios.post('http://localhost:3001/new-user', {username : un, password : pw});
+                    await LoginService.login(un, pw);
                     navigate('/decks')
 
                     //Need to update with login auth token

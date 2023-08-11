@@ -58,29 +58,6 @@ class DeckService {
   static newDeck = async (name : string) => {
     const token = await getToken();
 
-    /*
-    let data = JSON.stringify({
-      "name": name
-    });
-
-    const config = {
-      maxBodyLength: Infinity,
-      headers: { 
-        'Content-Type': 'application/json', 
-        'Authorization': token
-      },
-      data : data
-    };
-
-    try {
-      const response = await axios.post(url, config);
-      return response.data;
-
-    } catch (error) {
-      return null;
-    }
-    */
-
     let data = JSON.stringify({
       "name": name
     });

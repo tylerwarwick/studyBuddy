@@ -1,33 +1,38 @@
 import { useContext } from "react";
 import "../App.css"
 import { Context } from "../pages/editDeck";
-import { Card } from "../types/card";
+import { ICard } from "../types/card";
+import CardService from "../services/cardService";
+import LoginService from "../services/loginService";
+import { UserContext } from "../services/userContext";
+import { useNavigate } from "react-router-dom";
 
 
 
 interface RowProps {
-    card : Card
+    card : ICard
 }
-
-interface TableProps {
-    cards : Card[];
-    
-}
-
 
 const RowStyled = ({ card } : RowProps) => {
-    const { setEditHidden, cards, setCards, setID, questionText,
-        setQuestionText, answerText, setAnswerText } = useContext(Context)
+    const { setEditHidden, cards, setCards, setID, setQuestionText,  setAnswerText} = useContext(Context);
     
+    const { setUser } = useContext(UserContext);
+    const navigate = useNavigate();
 
-    const toggleIsKnown = (card : Card) => {
-        //********** UPDATE BACKEND *************
-        //const url = 'http://localhost/3001/notes/{' + card.id + '}';
-        //const change = !(card.isKnown);
-        //axios.patch(url, {isKnown : change})
+    const toggleIsKnown = (card : ICard) => {
+        const updateCard = async () => {
+            //Send put request
+            const updatedCard = await CardService.editCard(card.question, card.answer, !card.isKnown, card.id)
 
-        //Update frontend state
-        const updateKnown = cards.map((c) => {
+            //Handle bad token
+            if (!updatedCard) {
+                LoginService.logout();
+                setUser(null);
+                navigate('/login');
+            }
+
+            //Update frontend state
+            const updateKnown = cards.map((c) => {
                 if (c.id === card.id) return {...c, isKnown : !(c.isKnown)}
 
                 return c;
@@ -36,27 +41,39 @@ const RowStyled = ({ card } : RowProps) => {
             setCards(updateKnown)
         }
 
+        updateCard();
+        
+    }
+
     
     const onEdit = () => {
-        setID(() => card.id)
-        setQuestionText(() => card.question)
-        setAnswerText(() => card.answer)
+        setID(() => card.id);
+        setQuestionText(() => card.question);
+        setAnswerText(() => card.answer);
         setEditHidden(false);
     }
 
     const onDelete = () => {
-        //NEED TO UPDATE BACKEND
+        //Update backend
+        const deleteCard = async () => {
+            const data = await CardService.deleteCard(card.id)
+
+            //Handle bad token
+            if (!data) {
+                LoginService.logout();
+                setUser(null);
+                navigate('/login');
+            }
+        }
+
+        deleteCard();
+
         //Update frontend state
         const updateKnown = cards.filter((c) => {return c.id != card.id});
         setCards(updateKnown)
     }
     
 
-
-    
-    
-
-    //hover:bg-gray-600
     return (
         <tr className="border-b bg-gray-800 border-gray-700">
         <th scope="row" className="px-6 py-4 font-medium text-gray-900 w-2/5 dark:text-white ">
@@ -79,8 +96,8 @@ const RowStyled = ({ card } : RowProps) => {
 )};
 
 
-const Table = ({ cards } : TableProps) => {
-   
+const Table = () => {
+    const {cards} = useContext(Context);
     
     return (
         <div className="relative overflow-y-scroll overflow-x-autoshadow-md sm:rounded-lg">

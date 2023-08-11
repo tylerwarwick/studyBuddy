@@ -17,18 +17,10 @@ function App() {
   useEffect(() => {
     const getUser = async () => {
       const userJson : IUser = await JSON.parse(localStorage.getItem("user")!);
-      console.log(userJson);
       if (userJson) setUser(() => userJson);
     }
 
-    const foo = async () => {
-      await getUser();
-      console.log(user);
-    }
-    
-    foo();
-
-    
+    getUser();
   
   }, [])
 
@@ -44,8 +36,8 @@ function App() {
             <Route path='/' Component={Lobby}/>
             <Route path='/login' Component={Login}/>
             <Route path='/register' Component={Register}/>
-            <Route path='/practice/:deckID' Component={Practice}/>
-            <Route path='/edit-deck/:deckID' Component={EditDeck}/>
+            <Route path='/practice/:deckId' Component={Practice}/>
+            <Route path='/edit-deck/:deckId' Component={EditDeck}/>
             <Route path='/decks' Component={DeckLobby}/>
           </Routes>
         </BrowserRouter>

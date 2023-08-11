@@ -1,35 +1,28 @@
 import "../App.css"
 import Button from "./button"
 import { useRef } from "react"
-import { Card } from "../types/card";
+import { ICard } from "../types/card";
 import axios from "axios";
 
 
 interface Props {
-    cards: Card[];
-    setCards: React.Dispatch<React.SetStateAction<Card[]>>
     setHidden: React.Dispatch<React.SetStateAction<boolean>>
-    
+    newCard: (question: string, answer: string) => void
 }
 
 
 
 
-export const NewCardModal = ({ cards : cards, setCards : setCards, setHidden : setHidden} : Props) => {
+export const NewCardModal = ({setHidden : setHidden, newCard: newCard} : Props) => {
     const questionRef = useRef<HTMLTextAreaElement>(null);
     const answerRef = useRef<HTMLTextAreaElement>(null);
 
     const handleSubmit = (event : React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         
-        const newCard : Card = {
-            id : (Math.random()).toString(),
-            question : questionRef.current!.value,
-            answer : answerRef.current!.value,
-            isKnown : false
-        }
-
-        setCards(cards.concat(newCard))
+        //Pass question and answer along to update backend and frontend
+        newCard(questionRef.current!.value, answerRef.current!.value);
+        
         setHidden(true)
         questionRef.current!.value = '';
         answerRef.current!.value = '';

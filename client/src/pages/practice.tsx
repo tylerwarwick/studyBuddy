@@ -1,37 +1,51 @@
 import '../App.css';
 import axios from 'axios';
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useContext} from 'react';
 import CardRender from '../components/cardRender';
 import Button from '../components/button';
-import { useParams } from 'react-router-dom';
-import { Card } from '../types/card';
+import { useNavigate, useParams } from 'react-router-dom';
+import { ICard } from '../types/card';
+import CardService from '../services/cardService';
+import { UserContext } from '../services/userContext';
+import LoginService from '../services/loginService';
 
 type deckID = {a : string}
 
 
 const Practice = () => {
-    const [cards, setCards] = useState<Card[]>([]);
+    const [cards, setCards] = useState<ICard[]>([]);
     const [index, setIndex] = useState(0);
+    const { deckId } = useParams<string>();
+    const navigate = useNavigate();
+    const { setUser } = useContext(UserContext);
 
-    const params = useParams<deckID>() as string;
+
 
     //Fetch data from server on refresh
     useEffect(() => {
         const getData = async () => {
-            const data = (await axios.get("http://localhost:3001/")).data;
-            console.log('Hello')
-            const arr = data[Object.values(params)[0]] as Card[];
-            setCards(arr);
-            setIndex(arr.findIndex((c) => c.isKnown === false))
+            //Get param from url and pass to api to return cards
+            const data = await CardService.getCards(deckId!);
+
+            //Handle bad token
+            if (!data) {
+                LoginService.logout();
+                setUser(null);
+                navigate('/login');
+            }
+
+            const cardsCopy = data as ICard[];
+            setCards(() => cardsCopy);
+            setIndex(() => cardsCopy.findIndex((card) => card.isKnown === false))
+
+            
         }
-        
+    
         getData();
         
     }, [])
     
    
-    
-    
     
     //Define state for which way card is facing
     //Pass function to update state to child card component

@@ -9,6 +9,7 @@ import { UserContext } from "../services/userContext";
 import { useNavigate } from "react-router-dom";
 import DeckService from "../services/deckService";
 import deckService from "../services/deckService";
+import LoginService from "../services/loginService";
 
 
 
@@ -17,14 +18,18 @@ import deckService from "../services/deckService";
 
 export default function DeckLobby() {
     const [decks, setDecks] = useState<IDeck[]>([]);
-    const {user, setUser} = useContext(UserContext);
+    const {setUser} = useContext(UserContext);
     const navigate = useNavigate();
 
     useEffect(() => {
         const getDecks = async () => {
             const returnedDecks = await DeckService.getDecks();
 
-            if (returnedDecks === null) navigate('/login');
+            if (returnedDecks === null) {
+                LoginService.logout();
+                setUser(null);
+                navigate('/login');
+            }
             setDecks(returnedDecks);
         }
 

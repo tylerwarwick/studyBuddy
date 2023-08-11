@@ -1,7 +1,6 @@
 import { useRef, useState } from 'react';
 import '../App.css'
 import { AltPlusIcon } from '../icons/altPlusIcon'
-import axios from 'axios';
 import { IDeck } from '../types/deck';
 import DeckService from '../services/deckService';
 import { useNavigate } from 'react-router-dom';

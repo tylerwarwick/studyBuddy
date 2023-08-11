@@ -1,25 +1,24 @@
 import React, { useContext } from 'react';
 import '../App.css';
 import {useState} from 'react';
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { UserContext } from '../services/userContext';
+import LoginService from '../services/loginService';
 
 
 interface NavLinkProps {
-    DisplayTag : string;
-    Location : string;
+    displayTag : string;
+    location : string;
 }
 
 
 
-const NavLinkStyled = ({DisplayTag : displayTag, Location : location} : NavLinkProps) =>{
-    const navLinkDefaultStyles = "block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-    const navLinkActiveStyles = "block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-blue-500 dark:hover:text-white md:dark:hover:bg-transparent bg-blue-500 md:bg-transparent md:text-blue-500"
+const NavLinkStyled = ({displayTag: displayTag, location: location} : NavLinkProps) =>{
     return (   
     <li>
         <NavLink to={location} 
             className={({ isActive, isPending }) =>
-            isPending ? "pending" : isActive ? navLinkActiveStyles : navLinkDefaultStyles}> 
+            isPending ? "pending" : (isActive ? 'bg-blue-500 md:bg-transparent md:text-blue-500 ' : '') + 'block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent'}> 
                     {displayTag} 
         </NavLink>
     </li>
@@ -29,7 +28,7 @@ const NavLinkStyled = ({DisplayTag : displayTag, Location : location} : NavLinkP
 
 export default function Navbar() {
     const { user, setUser } = useContext(UserContext);
-
+    const navigate = useNavigate()
 
     //Set state for hiding/showing mobile menu popup
     const [hiding, setHiding] = useState(true)
@@ -50,8 +49,8 @@ export default function Navbar() {
             </button>
             <div className={(hiding ? "hidden " : "") + "w-full md:block md:w-auto"} id="navbar-default" >
                 <ul id='navbar' className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-                    <NavLinkStyled DisplayTag='Login' Location='/login'/>
-                    <NavLinkStyled DisplayTag='Register' Location='/register'/>
+                    <NavLinkStyled displayTag='Login' location='/login'/>
+                    <NavLinkStyled displayTag='Register' location='/register'/>
                 </ul>
             </div>
         </div>
@@ -73,8 +72,12 @@ export default function Navbar() {
                     </button>
                     <div className={(hiding ? "hidden " : "") + "w-full md:block md:w-auto"} id="navbar-default" >
                         <ul id='navbar' className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-                            <NavLinkStyled DisplayTag='Decks' Location='/decks'/>
-                            <NavLinkStyled DisplayTag='Logout' Location='/'/>
+                            <NavLinkStyled displayTag='Decks' location='/decks'/>
+                            <NavLink to={'/login'} onClick={()=> {LoginService.logout(); setUser(null)}}
+                            className={({ isActive, isPending }) =>
+                            isPending ? "pending" : (isActive ? 'bg-blue-500 md:bg-transparent md:text-blue-500 ' : '') + 'block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent'}> 
+                                    Logout
+                            </NavLink>
                         </ul>
                     </div>
                 </div>
