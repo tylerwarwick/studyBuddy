@@ -1,12 +1,10 @@
 import express from 'express'
 import cors from 'cors'
-import usersRouter from './controllers/users'
 import loginRouter from './controllers/login';
 import deckRouter from './controllers/decks';
 import { verifyToken } from './controllers/auth';
 import cardRouter from './controllers/cards';
-import bodyParser from 'body-parser';
-import registerRouter from './controllers/users';
+import registerRouter from './controllers/register';
 
 
 
