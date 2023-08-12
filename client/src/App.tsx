@@ -27,7 +27,7 @@ function App() {
   
   return (
     <UserContext.Provider value={{ user, setUser }}>
-      <div className='overflow-clip bg-gray-900'>
+      <div className='overflow-clip bg-gray-900 scroll-smooth'>
         <BrowserRouter>
           <div className='z-50 sticky top-0'>
             <Navbar />

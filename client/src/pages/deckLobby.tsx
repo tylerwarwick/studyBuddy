@@ -1,14 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import "../App.css"
 import DeckCard from "../components/deckCard";
-import axios from "axios";
 import NewDeck from "../components/newDeck";
 import { IDeck } from "../types/deck";
-import baseUrl from "../api/baseUrl";
 import { UserContext } from "../services/userContext";
 import { useNavigate } from "react-router-dom";
 import DeckService from "../services/deckService";
-import deckService from "../services/deckService";
 import LoginService from "../services/loginService";
 
 
