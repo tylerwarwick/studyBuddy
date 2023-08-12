@@ -3,9 +3,9 @@ import { Router } from 'express'
 import User from "../db/models/user"
 import mongoose from 'mongoose';
 
-const usersRouter = Router();
+const registerRouter = Router();
 
-usersRouter.post('/', async (request, response) => {
+registerRouter.post('/', async (request, response) => {
   //Get username and pw from request
   const { username, password } = request.body
 
@@ -37,4 +37,4 @@ usersRouter.post('/', async (request, response) => {
   
 })
 
-export default usersRouter;
+export default registerRouter;

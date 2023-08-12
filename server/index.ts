@@ -6,6 +6,7 @@ import deckRouter from './controllers/decks';
 import { verifyToken } from './controllers/auth';
 import cardRouter from './controllers/cards';
 import bodyParser from 'body-parser';
+import registerRouter from './controllers/users';
 
 
 
@@ -17,7 +18,7 @@ app.use(express.json())
 
 
 //Login and registration is allowed without token (obviously)
-app.use('/new-user', usersRouter);
+app.use('/register', registerRouter);
 app.use('/login', loginRouter);
 
 //Everything beyond is token verified  
