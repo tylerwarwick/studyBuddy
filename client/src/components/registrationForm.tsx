@@ -4,8 +4,14 @@ import { useState } from 'react'
 import {useNavigate} from 'react-router-dom';
 import LoginService from '../services/loginService';
 
+interface props {
+    setUsernameAlert: React.Dispatch<React.SetStateAction<boolean>>;
+    setPasswordAlert: React.Dispatch<React.SetStateAction<boolean>>;
+    setUniqueUserAlert: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
 // Registrationform
-export default function RegistrationForm() {
+export default function RegistrationForm({setUsernameAlert: setUsernameAlert, setPasswordAlert: setPasswordAlert, setUniqueUserAlert: setUniqueUserAlert} : props) {
     const [un, setUn] = useState('');
     const [confirmUn, setConfirmUn] = useState('');
     const [pw, setPw] = useState('');
@@ -15,10 +21,14 @@ export default function RegistrationForm() {
 
     const handleSubmit = (event : React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        setUsernameAlert(() => false);
+        setUsernameAlert(() => false)
+
+
         if (un === confirmUn && pw === confirmPw){
             const newUser = async () => {
                 try{
-                    await axios.post('http://localhost:3001/new-user', {username : un, password : pw});
+                    await axios.post('http://localhost:3001/register', {username : un, password : pw});
                     await LoginService.login(un, pw);
                     navigate('/decks')
 
@@ -26,7 +36,7 @@ export default function RegistrationForm() {
                 }
 
                 catch (err){
-                    alert("Username is already under use")
+                    setUniqueUserAlert(() => true)
                 }
             }
 
@@ -34,8 +44,8 @@ export default function RegistrationForm() {
         }
 
         else {
-            if (un !== confirmUn) alert("Usernames must match!");
-            if (pw !== confirmPw) alert("Passwords must match!");
+            if (un !== confirmUn) setUsernameAlert(() => true)
+            if (pw !== confirmPw) setPasswordAlert(() => true)
         }
     }
 

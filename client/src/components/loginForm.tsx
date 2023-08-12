@@ -4,8 +4,15 @@ import LoginService from '../services/loginService';
 import { UserContext } from '../services/userContext';
 import { useNavigate } from 'react-router-dom';
 
+
+interface props {
+    setAlert: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+
 // Login form
-export default function LoginForm() {
+export default function LoginForm({setAlert: setAlert} : props) {
+
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const { user, setUser } = useContext(UserContext);
@@ -13,6 +20,8 @@ export default function LoginForm() {
 
     const handleSubmit = (event : React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        setAlert(() => false);
+
         const tryLogin = async () => {
             try {
                 const response = await LoginService.login(username, password);
@@ -24,7 +33,7 @@ export default function LoginForm() {
             }   
 
             catch (error) {
-                alert("Login Failed");
+                setAlert(() => true);
             }
         }
 
