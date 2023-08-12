@@ -81,6 +81,36 @@ class DeckService {
       return null;
     }
   }
+
+  static deleteDeck = async (deckId: string) => {
+    const token = await getToken();
+
+    let data = JSON.stringify({
+        "deckId": deckId
+    });
+  
+    let config = {
+        method: 'delete',
+        maxBodyLength: Infinity,
+        url: url,
+        headers: { 
+            'Content-Type': 'application/json', 
+            'Authorization': token
+        },
+
+        data : data
+    }
+    
+    try {
+        await axios.request(config);
+        return true;
+
+    } catch (error) {
+        return null;
+    }
+}
+
+
 }
 
 

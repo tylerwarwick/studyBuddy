@@ -24,7 +24,6 @@ cardRouter.post('/', async (request, response) => {
 
 cardRouter.get('/:deckId', async (request, response) => {
     const deckId = request.params.deckId;
-    console.log(deckId);
     const cards = await Card.find({deck: new mongoose.Types.ObjectId(deckId)})
     return response.status(200).json(cards)
 })

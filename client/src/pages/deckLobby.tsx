@@ -42,7 +42,7 @@ export default function DeckLobby() {
         <div className="min-h-screen h-full bg-gray-900 w-screen ">
             <div className="flex justify-center items-center py-6">
                 
-                    <div className="grid [@media(min-width:1290px)]:grid-cols-3 gap-10 [@media(max-width:1289px)]:grid-cols-2 [@media(max-width:880px)]:grid-cols-1">
+                    <div className="grid w-fit [@media(min-width:1290px)]:grid-cols-3 gap-10 [@media(max-width:1289px)]:grid-cols-2 [@media(max-width:880px)]:grid-cols-1">
                         {decks?.map((deck) => (
                             <DeckCard deck={deck} decks={decks} setDecks={setDecks}/>             
                             ))}

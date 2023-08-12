@@ -13,7 +13,6 @@ const verifyToken : RequestHandler =  async (request, response, next) => {
  
     //Verify that auth token exists
     if (!(authorization && authorization.startsWith('Bearer '))) {
-        console.log("No bearer prefix")
         return response.status(400).json({error: 'Invalid Token'});
     }
 
@@ -22,19 +21,16 @@ const verifyToken : RequestHandler =  async (request, response, next) => {
     try {
         decodedToken  = jsonWebToken.verify(token, process.env.SECRET!) as JwtPayload;
     } catch (error) {
-        console.log("Bad token")
         return response.status(401).json({ error: 'token invalid, Try loggin in again' })
     }
   
     if (!decodedToken.id) {
-        console.log("Token Broke")
         return response.status(401).json({ error: 'token invalid, Try loggin in again' })
     }
 
 
     const user = await User.findById(decodedToken.id)
     if (!user) {
-        console.log("No User")
         return response.status(401).json({ error: 'User not found, Try loggin in again' });
     }
 

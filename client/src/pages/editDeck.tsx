@@ -12,6 +12,7 @@ import { ICard } from "../types/card";
 import CardService from "../services/cardService";
 import { UserContext } from "../services/userContext";
 import LoginService from "../services/loginService";
+import ConfirmDeletePopup from "../components/confirmDeletePopup";
 
 //Declare context types and states to share all states necessary
 type ContextType = {
@@ -59,6 +60,9 @@ export default function EditDeck(){
     //Need to share deckId for all backend calls
     const { deckId } = useParams<string>();
 
+    //Also need state to manage confirm delete popup
+    const [confirmHidden, setConfirmHidden] = useState(true);
+
     //Need to update auth and logout on token expire
     const { setUser } = useContext(UserContext);
     const navigate = useNavigate();
@@ -86,24 +90,19 @@ export default function EditDeck(){
 
     
     //Pass to new card modal to create cards
-    const newCard = (question: string, answer: string) => {
-        const postCard = async () => {
-            //Post to backend
-            const data = await CardService.newCard(question, answer, deckId!);
-
-            
-            //Handle bad token
-            if (!data) {
-                LoginService.logout();
-                setUser(null);
-                navigate('/login');
-            }
-            
-            //Update state
-            setCards((cards) => cards.concat(data as ICard))
+    const newCard = async (question: string, answer: string) => {
+        //Post to backend
+        const data = await CardService.newCard(question, answer, deckId!);
+ 
+        //Handle bad token
+        if (!data) {
+            LoginService.logout();
+            setUser(null);
+            navigate('/login');
         }
-
-        postCard();
+            
+        //Update state
+        setCards((cards) => cards.concat(data as ICard))
     }
 
     //Don't want to prop drill modal content down multiple layers so I will pass as context
@@ -113,20 +112,20 @@ export default function EditDeck(){
                     <div className="bg-gray-900 w-full h-screen">
                         <div className="flex flex-col items-center my-4 space-y-2">
 
-                            <div className="w-10/12">
+                            <div className="w-10/12 space-y-2">
+                                <button onClick={() => setConfirmHidden(false)} className='text-white focus:ring-4 w-full focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800'>Delete Deck</button>
                                 <Table />
                             </div>
-                        
-                            <div className={editModalHidden ? "hidden" : ""}>
-                                <EditModal cardId={modalCardID}/>
-                            </div> 
 
-                            <div className={newModalHidden ? "hidden" : ""}>
+                            {editModalHidden ? null : (<EditModal cardId={modalCardID}/>)}
+                            {confirmHidden ? null : (<ConfirmDeletePopup setConfirmHidden={setConfirmHidden} deckId={deckId!} />)}
+
+                            {newModalHidden ? null : (
                                 <NewCardModal 
                                 setHidden={setNewHidden}
                                 newCard={newCard}
                                 />
-                            </div>
+                            )}   
 
                         </div>
 

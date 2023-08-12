@@ -87,7 +87,7 @@ class CardService {
         }
         
         try {
-            const response = await axios.request(config);
+            await axios.request(config);
             return true;
     
         } catch (error) {
