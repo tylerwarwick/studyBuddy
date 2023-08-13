@@ -5,7 +5,7 @@ import deckRouter from './controllers/decks';
 import { verifyToken } from './controllers/auth';
 import cardRouter from './controllers/cards';
 import registerRouter from './controllers/register';
-import RateLimit from "express-rate-limit"
+import RateLimit from 'express-rate-limit';
 
 
 const app = express()
