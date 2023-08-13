@@ -119,7 +119,7 @@ const Practice = () => {
               
                 { (cards.length === 0) ? 
                 
-                    <div>
+                    <div className='w-full [@media(min-width:281px)]:w-11/12 sm:w-96 flex justify-center items-center'>
                         <CardRender displayText="This deck doesn't have any cards yet. Click here to add some." func={() => navigate(`/edit-deck/${deckId}`)}/>
                     </div>
                 
@@ -127,7 +127,12 @@ const Practice = () => {
                 
                 <div className='flex justify-center'>
                     <div className='space-y-3 flex flex-col'>
-                        <CardRender displayText={frontFacing ? cards[index]?.question : cards[index]?.answer} func={flipCard}/>
+                   
+                        <CardRender displayText={
+                              (cards.some((c) => c.isKnown === false)) ? (
+                            frontFacing ? cards[index]?.question : cards[index]?.answer ) :
+                            "You've completed this set of questions. Hit the reset button for more practice."
+                        } func={flipCard}/>
                         <div className='space-x-3'>
                             {
                             //If there is some unknown cards, practice as usual
@@ -138,7 +143,7 @@ const Practice = () => {
                             <Button clickHandler={knownClick} displayTag='I Know This One'></Button> 
                             </div>
                             ) : 
-                            ( <button onClick={resetDeck} className='text-white focus:ring-4 focus:outline-none font-bold rounded-lg text-lg w-full md:w-96 h-16 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800'>Reset Deck</button> )
+                            ( <button onClick={resetDeck} className='text-white focus:ring-4 focus:outline-none font-bold rounded-lg text-lg w-full px-24 sm:w-96 h-16 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800'>Reset Deck</button> )
                             }   
                         </div>
                     </div>

@@ -7,6 +7,8 @@ import { UserContext } from "../services/userContext";
 import { useNavigate } from "react-router-dom";
 import DeckService from "../services/deckService";
 import LoginService from "../services/loginService";
+import DeckCard2 from "../components/deckCard";
+import NewDeck2 from "../components/newDeck";
 
 
 
@@ -37,8 +39,8 @@ export default function DeckLobby() {
     return (
         
         <div className="min-h-screen h-full bg-gray-900 w-screen">
-            <div className="flex w-full justify-center items-center py-6">
-                <div className="grid w-fit [@media(min-width:1290px)]:grid-cols-3 gap-10 [@media(max-width:1289px)]:grid-cols-2 [@media(max-width:880px)]:grid-cols-1">
+            <div className="flex w-full justify-center items-center py-10">
+                <div className="flex flex-col w-11/12 lg:grid lg:grid-cols-3 lg:gap-10 space-y-6 lg:space-y-0 justify-content items-center overflow-none">
                     {decks?.map((deck) => (
                         <DeckCard deck={deck} decks={decks} setDecks={setDecks}/>             
                         ))}

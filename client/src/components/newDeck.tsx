@@ -52,30 +52,29 @@ export default function NewDeck({decks : decks, setDecks : setDecks} : newDeckCa
         setTimeout(() => {ref.current!.focus()}, 10)
     }
     return(
-        <div className="relative">
+        <div className="">
             <a onClick={()=>handleClick()}>
-                <div className="max-w-sm w-screen md:w-96 h-64 px-6 border rounded-lg shadow bg-gray-800 hover:bg-gray-700 border-gray-700">
-                    <div className={hidden ? "hidden" : ""}>
-                        <div className="absolute top-10 text-6xl text-white left-1/2 transform -translate-x-1/2 text-center">
+                <div className="w-screen [@media(min-width:281px)]:w-full flex flex-col justify-content items-center md:w-96 h-64 px-12 border rounded-lg shadow bg-gray-800 hover:bg-gray-700 border-gray-700">
+                    <div className={(hidden ? "hidden " : "") + "flex flex-col items-center justify-content py-10 space-y-9"}>
+                        <div className="text-6xl text-white text-center">
                             <AltPlusIcon/>
                         </div>
-                        <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 text-center">
+                        <div className="text-center">
                             <div className='text-white font-bold text-4xl text-center'>
                                 Add New Deck
                             </div>
                         </div>
                     </div>
+                    <div className={(hidden ? "" : "hidden ") + "py-11"}>
+                        <textarea  ref={ref} onChange={(event) => {setDeckTitle(event.target.value)}} 
+                        value={deckTitle} minLength={2} maxLength={20} spellCheck='false'
+                        onKeyDown={(event) => {onEnter(event)}} 
+                        onBlur={() => updateDecks()}
+                        autoFocus
+                        className="mb-2 w-72 text-center bg-inherit text-5xl font-bold resize-none h-fit focus:outline-white tracking-tight text-white no-scrollbar overflow-y-clip"></textarea>
+                    </div>
                 </div>
             </a>
-
-            <div className={(hidden ? "" : "hidden ") + "absolute top-12 left-1/2 transform -translate-x-1/2 text-center"}>
-                <textarea  ref={ref} onChange={(event) => {setDeckTitle(event.target.value)}} 
-                value={deckTitle} minLength={2} maxLength={20} spellCheck='false'
-                onKeyDown={(event) => {onEnter(event)}} 
-                onBlur={() => updateDecks()}
-                autoFocus
-                className="mb-2 w-72 text-center bg-inherit text-5xl font-bold resize-none h-fit focus:outline-white tracking-tight text-white"></textarea>
-            </div>
         </div>
             
         

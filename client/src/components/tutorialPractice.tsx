@@ -115,8 +115,11 @@ const TutorialPractice = () => {
 
     return (
             <div className='bg-gray-900 h-full flex flex-col space-y-3 items-center justify-center select-none'>
-                <CardRender displayText={frontFacing ? cards[index]?.question : cards[index]?.answer} func={flipCard}/>
-        
+                <CardRender displayText={
+                              (cards.some((c) => c.isKnown === false)) ? (
+                            frontFacing ? cards[index]?.question : cards[index]?.answer ) :
+                            "You've completed this set of questions. Hit the reset button for more practice."
+                        } func={flipCard}/>
                 <div className='space-x-3 w-full flex justify-center'>
                 {
                     //If there is some unknown cards, practice as usual
