@@ -1,8 +1,9 @@
 import axios from 'axios'
 import '../App.css'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import {useNavigate} from 'react-router-dom';
 import LoginService from '../services/loginService';
+import { UserContext } from '../services/userContext';
 
 interface props {
     setUsernameAlert: React.Dispatch<React.SetStateAction<boolean>>;
@@ -17,7 +18,7 @@ export default function RegistrationForm({setUsernameAlert: setUsernameAlert, se
     const [pw, setPw] = useState('');
     const [confirmPw, setConfirmPw] = useState('');
     const navigate = useNavigate();
-
+    const { setUser } = useContext(UserContext);
 
     const handleSubmit = (event : React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -28,11 +29,18 @@ export default function RegistrationForm({setUsernameAlert: setUsernameAlert, se
         if (un === confirmUn && pw === confirmPw){
             const newUser = async () => {
                 try{
-                    await axios.post('http://localhost:3001/register', {username : un, password : pw});
-                    await LoginService.login(un, pw);
-                    navigate('/decks')
+                    const registration = await axios.post('http://localhost:3001/register', {username : un, password : pw});
 
-                    //Need to update with login auth token
+                    if (registration){
+                        //Need to update with login auth token
+                        const response = await LoginService.login(un, pw);
+                        if(response.data.token){
+                            setUser(response.data);
+                            window.localStorage.setItem('user', JSON.stringify(response.data))
+                            navigate('/decks')
+                        }
+                    }
+                    
                 }
 
                 catch (err){
