@@ -6,7 +6,7 @@ interface props{
     message: string;
 }
 
-
+//Test push
 export default function Alert({dismissAlert: dismissAlert, message: message} : props){
 
     return(
