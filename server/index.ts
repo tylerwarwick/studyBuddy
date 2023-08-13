@@ -9,7 +9,9 @@ import registerRouter from './controllers/register';
 
 
 const app = express()
-app.use(cors()); 
+app.use(cors({
+  origin: 'https://studybuddy-q2tg.onrender.com/'
+})); 
 app.use(express.json())
 
 
