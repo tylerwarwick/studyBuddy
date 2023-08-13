@@ -45,4 +45,18 @@ cardRouter.put('/', async (request, response) => {
     return response.status(200).json(card)
 })
 
+cardRouter.put('/reset-Deck', async (request, response) => {
+    const { deckId } = request.body;
+
+    //Reset all cards to unknown from that deck
+    const cards = await Card.updateMany(
+        {deck : deckId}, 
+        {isKnown: false}, 
+        {returnOriginal: false}
+        );
+
+    
+    return response.status(200).json(cards)
+})
+
 export default cardRouter;

@@ -1,5 +1,5 @@
 import '../App.css';
-import axios from 'axios';
+
 import {useState, useEffect, useContext} from 'react';
 import CardRender from '../components/cardRender';
 import Button from '../components/button';
@@ -8,7 +8,7 @@ import { ICard } from '../types/card';
 import CardService from '../services/cardService';
 import { UserContext } from '../services/userContext';
 import LoginService from '../services/loginService';
-import NewCardPlaceholder from '../components/newCardPlaceholder';
+
 
 type deckID = {a : string}
 
@@ -70,21 +70,41 @@ const Practice = () => {
                 : setIndex(() => cards.findIndex((c) => c.id === nextCardId));
             }
         }
+
+        //Need an else clause for placeholder if all cards are known on refresh
+        else setIndex(() => 0);
         
     
     }
 
-    //Set card to known 
-    const updateKnown = cards.map((c) => {
-        if (c.id === cards[index].id) return {...c, isKnown : true}
-
-        return c;
-    })
-     
+   
     //On button click we get next unknown card
     const knownClick = () => {
-        //Update current card to known
-        setCards(updateKnown)
+        //Update known status on backend and frontend
+        const updateCard = async () => {
+            //Send put request
+            const card: ICard = cards[index];
+            const updatedCard = await CardService.editCard(card.question, card.answer, true, card.id)
+
+            //Handle bad token
+            if (!updatedCard) {
+                LoginService.logout();
+                setUser(null);
+                navigate('/login');
+            }
+
+            //Update frontend state
+            const updateKnown = cards.map((c) => {
+                if (c.id === card.id) return {...c, isKnown : true}
+
+                return c;
+            })
+
+            setCards(updateKnown)
+        }
+
+        updateCard();
+
         //Get next unknown card
         loopIndex()
         //Reset to front of next card
@@ -100,15 +120,27 @@ const Practice = () => {
     }
      
     const resetDeck = () => {
-        //Set all cards to unknown for more practice
-        setCards((cards) => cards.map((c) => {
+        const resetCards = async () => {
+            //Send put request
+            const resetVerification = await CardService.resetDeck(deckId!)
+
+            //Handle bad token
+            if (!resetVerification) {
+                LoginService.logout();
+                setUser(null);
+                navigate('/login');
+            }
+
+            //Set all cards to unknown on frontend 
+            setCards((cards) => cards.map((c) => {
             return {...c, isKnown : false}
         }))
+        }
+
+        resetCards();
 
         //Reset to first card in deck
-        setIndex(() => 0)
-        
-     
+        setIndex(() => 0);
     }
 
 

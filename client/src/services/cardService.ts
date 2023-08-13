@@ -127,6 +127,32 @@ class CardService {
         }
     }
 
+    static resetDeck = async ( deckId: string) => {
+        const token = await getToken();
+
+        let data = JSON.stringify({
+            "deckId": deckId
+          });
+          
+          let config = {
+            method: 'put',
+            maxBodyLength: Infinity,
+            url: url+'reset-deck',
+            headers: { 
+              'Content-Type': 'application/json', 
+              'Authorization': token
+            },
+            data : data
+          };
+        
+        try {
+            const response = await axios.request(config);
+            return response.data;
+    
+        } catch (error) {
+            return null;
+        }
+    }
 
 }
 
