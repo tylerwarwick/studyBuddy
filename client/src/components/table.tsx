@@ -100,7 +100,7 @@ const Table = () => {
     const {cards} = useContext(Context);
     
     return (
-        <div className="relative overflow-y-scroll overflow-x-autoshadow-md sm:rounded-lg">
+        <div className="relative overflow-y-scroll overflow-x-autoshadow-md rounded-lg">
         <table className="w-full text-sm text-left text-gray-400">
             <thead className="text-xs text-gray-400 uppercase bg-gray-700 text-gray-400 ">
                 <tr>

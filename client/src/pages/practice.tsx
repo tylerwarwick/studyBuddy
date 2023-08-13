@@ -8,6 +8,7 @@ import { ICard } from '../types/card';
 import CardService from '../services/cardService';
 import { UserContext } from '../services/userContext';
 import LoginService from '../services/loginService';
+import NewCardPlaceholder from '../components/newCardPlaceholder';
 
 type deckID = {a : string}
 
@@ -110,30 +111,42 @@ const Practice = () => {
      
     }
 
-    //If there is some unknown cards, practice as usual
-    if (cards.some((c) => c.isKnown === false)) {
+
+   
        
         return (
             <div className='bg-gray-900 h-screen flex flex-col space-y-3 items-center justify-center select-none'>
-                <CardRender displayText={frontFacing ? cards[index]?.question : cards[index]?.answer} func={flipCard}/>
-        
-                <div className='space-x-3'>
-                    <Button clickHandler={unknownClick} displayTag="I Don't Know This One"></Button>
-                    <Button clickHandler={knownClick} displayTag='I Know This One'></Button>
+              
+                { (cards.length === 0) ? 
+                
+                    <div>
+                        <CardRender displayText="This deck doesn't have any cards yet. Click here to add some." func={() => navigate(`/edit-deck/${deckId}`)}/>
+                    </div>
+                
+                : 
+                
+                <div className='flex justify-center'>
+                    <div className='space-y-3 flex flex-col'>
+                        <CardRender displayText={frontFacing ? cards[index]?.question : cards[index]?.answer} func={flipCard}/>
+                        <div className='space-x-3'>
+                            {
+                            //If there is some unknown cards, practice as usual
+                            //If all cards are known, present reset deck button
+                            (cards.some((c) => c.isKnown === false)) ? 
+                            (<div className='flex justify-center space-x-3'>
+                            <Button clickHandler={unknownClick} displayTag="I Don't Know This One"></Button>
+                            <Button clickHandler={knownClick} displayTag='I Know This One'></Button> 
+                            </div>
+                            ) : 
+                            ( <button onClick={resetDeck} className='text-white focus:ring-4 focus:outline-none font-bold rounded-lg text-lg w-full md:w-96 h-16 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800'>Reset Deck</button> )
+                            }   
+                        </div>
+                    </div>
                 </div>
+                }
             </div>
+            
         );
     }
-
-    //If all cards are known, present reset deck button
-    else {
-        return (
-            <div className='bg-gray-900 h-screen flex flex-col space-y-3 items-center justify-center select-none'>
-                <CardRender displayText={"You've completed all of the questions"} func={flipCard}/>
-                <button onClick={resetDeck} className='text-white focus:ring-4 focus:outline-none font-bold rounded-lg text-lg w-full md:w-96 h-16 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800'>Reset Deck</button>
-            </div>
-        );
-    }
-}
 
 export default Practice;

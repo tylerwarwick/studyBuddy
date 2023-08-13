@@ -115,6 +115,28 @@ export default function EditDeck(){
                             <div className="w-10/12 space-y-2">
                                 <button onClick={() => setConfirmHidden(false)} className='text-white focus:ring-4 w-full focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800'>Delete Deck</button>
                                 <Table />
+
+                                { (cards.length === 0) ?
+                                    (
+                                        <div className="bg-gray-800 border-gray-700 rounded-lg block h-full flex justify-center items-center text-center px-10 py-28 my-4">
+                                            <h1 className="text-bold text-gray-400 text-lg">
+                                                This deck has no questions yet. Click the plus button to add some.
+                                            </h1>
+                                        </div>
+                                    )
+                                    :
+                                    (
+                                        <div>
+
+                                        </div>
+                                    )
+                                }
+
+
+
+
+
+
                             </div>
 
                             {editModalHidden ? null : (<EditModal cardId={modalCardID}/>)}
