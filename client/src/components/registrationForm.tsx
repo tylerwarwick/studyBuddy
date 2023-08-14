@@ -4,6 +4,7 @@ import { useContext, useState } from 'react'
 import {useNavigate} from 'react-router-dom';
 import LoginService from '../services/loginService';
 import { UserContext } from '../services/userContext';
+import baseUrl from '../api/baseUrl';
 
 interface props {
     setUsernameAlert: React.Dispatch<React.SetStateAction<boolean>>;
@@ -29,7 +30,7 @@ export default function RegistrationForm({setUsernameAlert: setUsernameAlert, se
         if (un === confirmUn && pw === confirmPw){
             const newUser = async () => {
                 try{
-                    const registration = await axios.post('http://localhost:3001/register', {username : un, password : pw});
+                    const registration = await axios.post(baseUrl+'register', {username : un, password : pw});
 
                     if (registration){
                         //Need to update with login auth token
