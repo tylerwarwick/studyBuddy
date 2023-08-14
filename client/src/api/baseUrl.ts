@@ -1,2 +1,2 @@
-const baseUrl : string = 'http://localhost:3001/';
+const baseUrl : string = 'https://studybuddy-rest-api.onrender.com/';
 export default baseUrl
