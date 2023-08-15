@@ -10,7 +10,7 @@ export default function Register(){
 
     return (
 
-        <div className="bg-white dark:bg-gray-900 h-screen flex items-center justify-center flex-col space-y-2">
+        <div className="bg-gray-900 h-screen flex items-center justify-center flex-col space-y-2">
             {usernameAlert ? <Alert dismissAlert={setUsernameAlert} message='Usernames must match!'/> : null }
             {passwordAlert ? <Alert dismissAlert={setPasswordAlert} message='Passwords must match!'/> : null }
             {uniqueUserAlert ? <Alert dismissAlert={setUniqueUserAlert} message='Username is already taken!'/> : null }

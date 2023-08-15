@@ -76,7 +76,7 @@ const RowStyled = ({ card } : RowProps) => {
 
     return (
         <tr className="border-b bg-gray-800 border-gray-700">
-        <th scope="row" className="px-6 py-4 font-medium text-gray-900 w-2/5 dark:text-white ">
+        <th scope="row" className="px-6 py-4 font-medium w-2/5 text-white ">
             {card.question}
         </th>
         <td className="px-6 py-4 w-2/5">
@@ -88,8 +88,8 @@ const RowStyled = ({ card } : RowProps) => {
         </td>
 
         <td className="px-6 py-4 space-x-3">
-            <a onClick={() => onEdit()} className="font-medium text-blue-600 dark:text-blue-500 select-none hover:underline">Edit</a> 
-            <a onClick={() => onDelete()} className="font-medium text-blue-600 dark:text-blue-500 select-none hover:underline">Delete</a>
+            <a onClick={() => onEdit()} className="font-medium text-blue-500 select-none hover:underline">Edit</a> 
+            <a onClick={() => onDelete()} className="font-medium text-blue-500 select-none hover:underline">Delete</a>
         </td>
     </tr>
 
