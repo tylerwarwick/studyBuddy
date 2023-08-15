@@ -1,2 +1,3 @@
-#StudyBuddy
-Memorization tool for students. Utilizes active recall and filters through to the questions the user has yet to answer correctly.
+# StudyBuddy
+
+StudyBuddy is a memorization tool for students. The interface forces users to utilize active recall and automatically filters to the questions that they are yet to get right.
