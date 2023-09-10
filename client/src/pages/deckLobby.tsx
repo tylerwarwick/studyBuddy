@@ -38,7 +38,7 @@ export default function DeckLobby() {
 
     return (
         
-        <div className="min-h-screen h-full bg-gray-900 w-screen">
+        <div className="min-h-screen h-full bg-gray-900 w-screen overscroll-y-auto">
             <div className="flex w-full justify-center items-center py-10">
                 <div className="flex flex-col w-11/12 lg:grid lg:grid-cols-3 lg:gap-10 space-y-6 lg:space-y-0 justify-content items-center overflow-none">
                     {decks?.map((deck) => (
