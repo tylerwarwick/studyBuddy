@@ -109,7 +109,7 @@ export default function EditDeck(){
     //May be over kill but likely a more readable solution
     return(
         <Context.Provider value={{setEditHidden, cards, setCards, setID, questionText, setQuestionText, answerText, setAnswerText}}>
-                    <div className="bg-gray-900 w-full h-screen">
+                    <div className="bg-gray-900 w-full h-screen overflow-y-scroll">
                         <div className="flex flex-col items-center my-4 space-y-2">
 
                             <div className="w-10/12 space-y-2">
