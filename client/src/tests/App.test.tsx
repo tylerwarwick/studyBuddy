@@ -3,9 +3,10 @@ import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
 import App from '../App'
 
-test('renders App', () => {
+test('renders content', () => {
+
   render(<App/>)
 
-  const element = screen.getByText('Component testing is done with react-testing-library')
+  const element = screen.getByText('Login')
   expect(element).toBeDefined()
 })
