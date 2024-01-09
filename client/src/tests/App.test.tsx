@@ -7,6 +7,6 @@ test('renders content', () => {
 
   render(<App/>)
 
-  const element = screen.getByText('Login')
+  const element = screen.getByText('StudyBuddy')
   expect(element).toBeDefined()
 })
