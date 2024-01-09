@@ -1,4 +1,3 @@
-import React from 'react'
 import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
@@ -14,7 +13,7 @@ const Card : ICard = {
   }
 
 
-test('renders content', () => {
+test('renders card', () => {
   render(<CardRender displayText={Card.question} func={()=>{}}/>)
 
   const element = screen.getByText('How old is the earth?')
@@ -23,7 +22,7 @@ test('renders content', () => {
 
 })
 
-test('clicking the button calls event handler once', async () => {
+test('clicking the card calls the event handler', async () => {
     const mockHandler = jest.fn()
   
     render(<CardRender displayText={Card.question} func={mockHandler}/>)
